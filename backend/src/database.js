@@ -33,7 +33,30 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 const { User, Personality, Friendship, HostPost } = sequelize.models;
 
+User.belongsToMany(User, {
+    as: 'friends',
+    through: Friendship,
+    foreignKey: 'userId', 
+    otherKey: 'friendId'
+});
 
+User.belongsToMany(Personality, { through: "UserPersonality", timestamps: false});
+Personality.belongsToMany(User, { through: "UserPersonality", timestamps: false});
+
+// Product.belongsToMany(Review, { through: "productreview", as: "Reviews" });
+// Review.belongsToMany(Product, { through: "productreview", as: "Product" });
+
+// Product.belongsTo(Category);
+// Category.hasMany(Product);
+
+// Cart.belongsTo(User)
+// User.hasOne(Cart)
+
+// User.belongsToMany(Product, { through: 'FavoriteProduct', as: 'FavoriteProducts' });
+// Product.belongsToMany(User, { through: 'FavoriteProduct', as: 'FavoritedBy' });
+
+// Order.belongsTo(User);
+// User.hasMany(Order);
 
 module.exports = {
   ...sequelize.models,
