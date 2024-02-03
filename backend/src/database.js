@@ -3,14 +3,14 @@ const { Sequelize } = require("sequelize");
 
 const fs = require('fs');
 const path = require('path');
-const { DB_USER, DB_PASSWORD, DB_HOST} = process.env;
+const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 const { DB_DEPLOY } = process.env;
 
 
 // const sequelize = new Sequelize(DB_DEPLOY, {
 const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/help_and_stay`, {
-  logging: false,
-  native: false,
+    logging: false,
+    native: false,
 });
 
 const basename = path.basename(__filename);
@@ -18,10 +18,10 @@ const basename = path.basename(__filename);
 const modelDefiners = [];
 
 fs.readdirSync(path.join(__dirname, '/models'))
-  .filter((file) => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
-  .forEach((file) => {
-    modelDefiners.push(require(path.join(__dirname, '/models', file)));
-  });
+    .filter((file) => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
+    .forEach((file) => {
+        modelDefiners.push(require(path.join(__dirname, '/models', file)));
+    });
 
 
 modelDefiners.forEach(model => model(sequelize));
@@ -31,34 +31,29 @@ let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].s
 sequelize.models = Object.fromEntries(capsEntries);
 
 
-const { User, Personality, Friendship, HostPost } = sequelize.models;
+const { User, Personality, Friendship, HostPost, Review } = sequelize.models;
 
 User.belongsToMany(User, {
     as: 'friends',
     through: Friendship,
-    foreignKey: 'userId', 
+    foreignKey: 'userId',
     otherKey: 'friendId'
 });
 
-User.belongsToMany(Personality, { through: "UserPersonality", timestamps: false});
-Personality.belongsToMany(User, { through: "UserPersonality", timestamps: false});
+User.belongsToMany(Personality, { through: "UserPersonality", timestamps: false });
+Personality.belongsToMany(User, { through: "UserPersonality", timestamps: false });
 
-// Product.belongsToMany(Review, { through: "productreview", as: "Reviews" });
-// Review.belongsToMany(Product, { through: "productreview", as: "Product" });
+User.belongsToMany(HostPost, { through: "UserFavorites", timestamps: true });
+HostPost.belongsToMany(User, { through: "UserFavorites", timestamps: true });
 
-// Product.belongsTo(Category);
-// Category.hasMany(Product);
+User.hasMany(Review);
+Review.belongsTo(User);
 
-// Cart.belongsTo(User)
-// User.hasOne(Cart)
+HostPost.hasMany(Review);
+Review.belongsTo(HostPost);
 
-// User.belongsToMany(Product, { through: 'FavoriteProduct', as: 'FavoriteProducts' });
-// Product.belongsToMany(User, { through: 'FavoriteProduct', as: 'FavoritedBy' });
-
-// Order.belongsTo(User);
-// User.hasMany(Order);
 
 module.exports = {
-  ...sequelize.models,
-  conn: sequelize,
+    ...sequelize.models,
+    conn: sequelize,
 };

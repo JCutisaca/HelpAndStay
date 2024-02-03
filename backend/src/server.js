@@ -1,7 +1,7 @@
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
-const router = require('./router/')
+const router = require('./router/index')
 const server = express();
 
 server.use(morgan('dev'))
