@@ -1,0 +1,9 @@
+const server = require('./src/server')
+const { conn } = require('./src/database')
+const port = 3001
+
+conn.sync({ force: false }).then(() => {
+    server.listen(port, () => {
+        console.log(`Server listening on port ${port}`);
+    })
+}).catch(error => console.error(error))
