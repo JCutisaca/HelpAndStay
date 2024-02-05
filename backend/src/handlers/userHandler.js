@@ -1,4 +1,5 @@
 const getAllUsers = require("../controllers/UserController/getAllUsers")
+const getUserById = require("../controllers/UserController/getUserById")
 const postUser = require("../controllers/UserController/postUser")
 const verifyEmail = require("../controllers/UserController/verifyEmail")
 
@@ -28,9 +29,18 @@ const verifyEmailHandler = async (req, res) => {
         res.status(404).json({error: error.message})
     }
 }
+const getUserByIdHandler = async (req, res) => {
+    try {
+        const response = await getUserById(req.params)
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(404).json({error: error.message})
+    }
+}
 
 module.exports = {
     postUserHandler,
     getAllUsersHandler,
-    verifyEmailHandler
+    verifyEmailHandler,
+    getUserByIdHandler
 }
