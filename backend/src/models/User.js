@@ -17,12 +17,17 @@ module.exports = (sequelize) => {
         },
         email: {
             type: DataTypes.STRING,
-            allownull: false
+            allownull: false,
+            unique: true
         },
         emailVerified: {
             type: DataTypes.BOOLEAN,
             allownull: false,
             defaultValue: false
+        },
+        emailCode: {
+            type: DataTypes.STRING,
+            allownull: true
         },
         password: {
             type: DataTypes.STRING,
@@ -33,9 +38,8 @@ module.exports = (sequelize) => {
             allownull: true
         },
         image: {
-            type: DataTypes.STRING,
-            allownull: true,
-            unique: true
+            type: DataTypes.ARRAY(DataTypes.STRING),
+            allownull: true
         },
         age: {
             type: DataTypes.INTEGER,
@@ -56,7 +60,7 @@ module.exports = (sequelize) => {
         },
         quote: {
             type: DataTypes.STRING,
-            allownull: false
+            allownull: true
         },
         aboutMe: {
             type: DataTypes.STRING,
@@ -83,8 +87,8 @@ module.exports = (sequelize) => {
             allownull: true
         },
         languages: {
-            type: DataTypes.DATE,
-            allownull: true
+            type: DataTypes.ARRAY(DataTypes.STRING),
+            allownull: false
         }
     }, {
         timestamps: true
