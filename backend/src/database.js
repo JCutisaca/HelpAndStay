@@ -49,6 +49,9 @@ HostPost.belongsToMany(User, { through: "UserFavorites", timestamps: true });
 User.hasMany(Review);
 Review.belongsTo(User);
 
+User.hasOne(HostPost, { foreignKey: 'ownerId', as: 'OwnedHostPost' });
+HostPost.belongsTo(User, { foreignKey: 'ownerId', as: 'OwnedHostPost' });
+
 HostPost.hasMany(Review);
 Review.belongsTo(HostPost);
 
