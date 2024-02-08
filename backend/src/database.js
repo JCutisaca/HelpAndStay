@@ -31,7 +31,7 @@ let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].s
 sequelize.models = Object.fromEntries(capsEntries);
 
 
-const { User, Personality, Friendship, HostPost, Review } = sequelize.models;
+const { User, Personality, Friendship, HostPost, Review, Reservation } = sequelize.models;
 
 User.belongsToMany(User, {
     as: 'friends',
@@ -55,6 +55,11 @@ HostPost.belongsTo(User, { foreignKey: 'ownerId', as: 'OwnedHostPost' });
 HostPost.hasMany(Review);
 Review.belongsTo(HostPost);
 
+User.hasMany(Reservation);
+HostPost.hasMany(Reservation);
+
+Reservation.belongsTo(User);
+Reservation.belongsTo(HostPost);
 
 module.exports = {
     ...sequelize.models,
