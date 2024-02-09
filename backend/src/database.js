@@ -40,6 +40,9 @@ User.belongsToMany(User, {
     otherKey: 'friendId'
 });
 
+Friendship.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+Friendship.belongsTo(User, { foreignKey: 'friendId', as: 'friend' });
+
 User.belongsToMany(Personality, { through: "UserPersonality", timestamps: false });
 Personality.belongsToMany(User, { through: "UserPersonality", timestamps: false });
 

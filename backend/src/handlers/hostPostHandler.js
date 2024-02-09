@@ -3,7 +3,6 @@ const getAllHostPost = require("../controllers/HostPostController/getAllHostPost
 const getHostPostById = require("../controllers/HostPostController/getHostPostById")
 const hostPostCreate = require("../controllers/HostPostController/hostPostCreate")
 const postFav = require("../controllers/HostPostController/postFav")
-const postReservation = require("../controllers/HostPostController/postReservation")
 
 
 const hostPostCreateHandler = async (req, res) => {
@@ -51,20 +50,10 @@ const deleteFavHandler = async (req, res) => {
     }
 }
 
-const postReservationHandler = async (req, res) => {
-    try {
-        const response = await postReservation(req.body)
-        res.status(201).json(response)
-    } catch (error) {
-        res.status(400).json({error: error.message})
-    }
-}
-
 module.exports = {
     hostPostCreateHandler,
     getAllHostPostHandler,
     getHostPostByIdHandler,
     postFavHandler,
-    deleteFavHandler,
-    postReservationHandler
+    deleteFavHandler
 }

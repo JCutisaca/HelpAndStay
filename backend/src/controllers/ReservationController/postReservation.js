@@ -1,5 +1,5 @@
 const { Reservation } = require("../../database");
-const getUserById = require("../../controllers/UserController/getUserById");
+const getUserById = require("../UserController/getUserById");
 const getHostPostById = require("../HostPostController/getHostPostById");
 
 const postReservation = async ({ userId, hostPostId, reservation }) => {
