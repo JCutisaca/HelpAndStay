@@ -8,37 +8,8 @@ module.exports = (sequelize) => {
             defaultValue: DataTypes.UUIDV4
         },
         name: {
-            type: DataTypes.ENUM(
-                'Responsible',
-                'Loyal',
-                'Creative',
-                'Caring',
-                'Multitasking',
-                'Kindly',
-                'Industrious',
-                'Sociable',
-                'Adventurous',
-                'Optimistic',
-                'Analytical',
-                'Empathetic',
-                'Ambitious',
-                'Easygoing',
-                'Charismatic',
-                'Patient',
-                'Organized',
-                'Enthusiastic',
-                'Resilient',
-                'OpenMinded',
-                'Assertive',
-                'Humble',
-                'Decisive',
-                'Resourceful',
-                'Perceptive',
-                'Punctual',
-                'Tenacious',
-                'Reliable'
-            ),
-            allownull: false,
+            type: DataTypes.STRING,
+            allowNull: false,
         }
     }, {
         timestamps: true

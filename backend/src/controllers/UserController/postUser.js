@@ -1,11 +1,11 @@
-const { User } = require('../../database')
+const { User, Personality } = require('../../database')
 const mailUserCreated = require('../../config/mailUserCreated');
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = process.env;
 
 const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const postUser = async ({ name, lastname, email, password, image, age, status, quote, aboutMe, facebook, instagram, whatsApp, coreNeeds, frustrations, languages }) => {
+const postUser = async ({ name, lastname, email, password, image, age, status, quote, aboutMe, facebook, instagram, whatsApp, coreNeeds, frustrations, languages, personality }) => {
 
     const newName = name?.trim()
     const newLastname = lastname?.trim()
@@ -20,13 +20,19 @@ const postUser = async ({ name, lastname, email, password, image, age, status, q
     const newFrustrations = frustrations?.trim()
     const newAboutMe = aboutMe?.trim()
 
-    if (!(newName.length || newLastname.length || newEmail.length || newPassword.length || image?.length || age?.length || newStatus.length || newAboutMe.length || languages?.length)) throw Error("Required data is missing. Please provide the fields")
+    if (!(newName.length || newLastname.length || newEmail.length || newPassword.length || image?.length || age?.length || newStatus.length || newAboutMe.length || languages?.length || personality?.length)) throw Error("Required data is missing. Please provide the fields")
 
     if (newPassword.length < 6 || newPassword.length > 14) throw Error('Password must be between 6 and 14 characters in length.');
 
     if (!regexEmail.test(newEmail)) throw Error("Invalid email address entered.")
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    const selectedPersonalities = await Personality.findAll({
+        where: { id: personality }
+    });
+
+    if (selectedPersonalities.length !== personality.length) throw Error('At least one personality does not exist.');
 
     const [newUser, created] = await User.findOrCreate({
         where: {
@@ -44,15 +50,17 @@ const postUser = async ({ name, lastname, email, password, image, age, status, q
             whatsApp: newWhatsApp,
             coreNeeds: newCoreNeeds,
             frustrations: newFrustrations,
-            languages: languages
+            languages: languages,
         }
     })
 
-    if (!created) throw Error("User with the provided information already exists.")
+    if (!created) throw Error("User with the provided information already exists.");
 
     const { id } = newUser.dataValues;
 
     if (created) {
+        await newUser.setPersonalities(selectedPersonalities);
+
         const verifyEmail = await bcrypt.hash(id, 10)
         await User.update({
             emailCode: verifyEmail
