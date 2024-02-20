@@ -17,6 +17,7 @@ module.exports = {
       '16': 'repeat(16, minmax(0, 1fr))',
       '12': 'repeat(12, minmax(0, 1fr))',
       '14': 'repeat(14, minmax(0, 1fr))',
+      '6': 'repeat(6, minmax(0, 1fr))',
     },
       extend: {
         backgroundImage: {
