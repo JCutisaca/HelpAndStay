@@ -1,17 +1,49 @@
+"use client"
 import { Inter } from "next/font/google";
 import "./globals.css";
-import favicon from './favicon.ico';
 import NavBar from "@/components/NavBar/NavBar";
 import Footer from "@/components/Footer/Footer";
+import i18n from "i18next";
+import { useTranslation, initReactI18next } from "react-i18next";
+import global_en from '@/languages/en/global.json'
+import global_es from '@/languages/es/global.json'
+import { useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
+const metadata = {
   title: "Help&Stay",
   description: "In progress",
 };
 
+i18n
+  .use(initReactI18next)
+  .init({
+    resources: {
+      en: {
+        global: global_en
+      },
+      es: {
+        global: global_es
+      }
+    },
+    lng: "en",
+    fallbackLng: "en",
+
+    interpolation: {
+      escapeValue: false
+    }
+  });
+
 export default function RootLayout({ children }) {
+
+  const [t, i18n] = useTranslation("global");
+
+  useEffect(() => {
+    const language = localStorage.getItem("language");
+    i18n.changeLanguage(language);
+  }, [])
+
   return (
     <html lang="en">
       <head>
