@@ -10,9 +10,10 @@ import lanterns from '@/assets/images/lanterns.webp'
 import { useTranslation } from "react-i18next";
 import About from "@/components/About/About";
 
+
+
 export default function Home() {
   const [t, i18n] = useTranslation("global");
-
 
   return (
     <div className="w-full">
@@ -22,9 +23,9 @@ export default function Home() {
           <button className="flex items-center justify-center w-[inherit] h-[65%] text-xl font-monserrat font-semibold w-40 text-white text-nowrap bg-[#5196A6] rounded-xl">Sign up</button>
         </div>
         <div className="flex col-span-2 row-span-2 md:col-start-2 md:col-end-5 md:row-start-2 md:row-end-5">
-          <Image className="object-cover w-full" src={telephone}></Image>
+          <Image className="object-cover w-full" alt="telephone" src={telephone}></Image>
         </div>
-        <div className="flex flex-col items-center justify-center gap-2 col-span-2 row-start-4 row-end-4 bg-white z-10 h-full md:col-start-1 md:col-end-4 md:row-start-4 md:row-end-6">
+        <div className="flex flex-col items-center justify-center gap-2 col-span-2 row-start-4 row-end-4 bg-white z-[1] h-full md:col-start-1 md:col-end-4 md:row-start-4 md:row-end-6">
           <div className="w-full h-[50%] flex items-center justify-center">
             <h1 className="font-unbounded text-3xl md:text-4xl lg:text-7xl">Where next?</h1>
           </div>
@@ -33,25 +34,26 @@ export default function Home() {
           </div>
         </div>
         <div className="col-span-1 row-start-5 row-end-9 md:col-start-5 md:row-start-1 md:row-end-9">
-          <Image className="object-cover h-[100%]" src={towerEiffel}></Image>
+          <Image className="object-cover h-[100%]" alt="Tower Eiffel" src={towerEiffel}></Image>
         </div>
         <div className="col-starts-2 row-start-5 row-end-7 md:row-start-5 md:col-start-3 md:row-end-8 md:col-end-5 relative">
-          <Image className="object-cover h-full" src={hotAirBalloon}></Image>
+          <Image className="object-cover h-full" alt="Hot air balloon" src={hotAirBalloon}></Image>
         </div>
         <div className="col-start-2 row-start-7 row-end-9 md:row-start-6 md:col-start-1 md:row-end-9 md:col-end-3">
-          <Image className="object-cover h-full" src={foodStand}></Image>
+          <Image className="object-cover h-full" alt="Food stand China" src={foodStand}></Image>
         </div>
         <div className="flex col-start-1 col-end-3 row-start-9 row-end-12 md:col-start-6 md:col-end-8 md:row-start-2 md:row-end-5">
-          <Image className="object-cover w-full" src={mausoleum}></Image>
+          <Image className="object-cover w-full" alt="Mausoleum" src={mausoleum}></Image>
         </div>
         <div className="invisible md:visible md:col-start-6 md:col-end-7 md:row-start-5 md:row-end-7">
-          <Image className="object-cover w-full" src={statuesBuddha}></Image>
+          <Image className="object-cover w-full" alt="Statues Buddha" src={statuesBuddha}></Image>
         </div>
         <div className="invisible md:visible md:col-start-7 md:col-end-7 md:row-start-5 md:row-end-7">
-          <Image className="object-cover w-full" src={lanterns}></Image>
+          <Image className="object-cover w-full" alt="lanterns China" src={lanterns}></Image>
         </div>
       </div>
       <About />
+      
     </div>
   );
 }

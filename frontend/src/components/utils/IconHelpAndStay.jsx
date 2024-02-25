@@ -5,7 +5,7 @@ import icon from "../../../public/icon.png"
 export default function IconHelpAndStay() {
     return (
         <>
-            <Image className="w-40 relative top-fixed" src={icon}></Image>
+            <Image className="w-40 relative top-[-0.4rem]" alt="" src={icon}></Image>
         </>
     )
 }

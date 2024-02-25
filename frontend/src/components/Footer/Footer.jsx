@@ -8,7 +8,7 @@ export default function Footer() {
     return (
         <footer className="bg-[#72A689] grid grid-rows-12 grid-cols-12 h-[30rem] md:gap-4 md:grid-cols-16 md:grid-rows-6 md:h-[15rem]">
             <div className="col-end-6 md:col-end-4 col-span-2 col-start-2 row-start-2 md:col-end-4 row-end-4">
-                <Image className="object-contain w-full" src={iconWhite}></Image>
+                <Image className="object-contain w-full" alt="" src={iconWhite}></Image>
             </div>
             <div className="gap-3 justify-center w-fit flex flex-col items-start col-start-2 row-start-4 row-end-7 md:col-start-5 md:row-start-2 md:row-span-4 md:grid md:items-center md:gap-4 text-nowrap">
                 <Link className="font-monserrat text-white w-fit" href={"/"}>About us</Link>
@@ -35,10 +35,10 @@ export default function Footer() {
                     </svg>
                 </Link>
                 <Link target="blank" className="row-span-1 font-monserrat text-white h-8 w-fit" href={"https://github.com/JCutisaca/"}>
-                    <Image className="w-fit h-8" src={gitHubIcon}></Image>
+                    <Image className="w-fit h-8" alt="" src={gitHubIcon}></Image>
                 </Link>
                 <Link target="blank" className="row-span-1 font-monserrat text-white h-8 w-fit" href={"mailto:lucas.soldierty@gmail.com"}>
-                    <Image className="w-fit h-8" src={email}></Image>
+                    <Image className="w-fit h-8" alt="" src={email}></Image>
                 </Link>
             </div>
         </footer>
