@@ -9,17 +9,31 @@ import statuesBuddha from '@/assets/images/statuesBuddha.webp'
 import lanterns from '@/assets/images/lanterns.webp'
 import { useTranslation } from "react-i18next";
 import About from "@/components/About/About";
+import LoginModal from "@/components/LoginModal/LoginModal";
+import { useState } from "react";
 
 
 
 export default function Home() {
   const [t, i18n] = useTranslation("global");
+  const [loginModal, setLoginModal] = useState(false);
+
+  const closeModal = (event) => {
+    if (event.target.id === "modal") {
+      setLoginModal(false);
+    }
+  }
 
   return (
     <div className="w-full">
       <div className="grid grid-cols-2 grid-rows-12 md:grid-cols-7 md:grid-rows-9 gap-4 w-full h-full max-h-[90vh]">
         <div className="flex items-center gap-4 w-full h-full justify-between col-span-2 md:hidden">
-          <button className="flex items-center justify-center w-[inherit] h-[65%] text-xl font-monserrat font-semibold w-40 text-[#5196A6] border border-solid border-4 rounded-xl">Sign in</button>
+          <button onClick={() => setLoginModal(true)} className="flex items-center justify-center w-[inherit] h-[65%] text-xl font-monserrat font-semibold w-40 text-[#5196A6] border border-solid border-4 rounded-xl">Sign in</button>
+          {loginModal &&
+            <div onClick={closeModal} id="modal" className="fixed top-0 left-0 w-full h-full z-[3] bg-[#000000b3]">
+              <LoginModal />
+            </div>
+          }
           <button className="flex items-center justify-center w-[inherit] h-[65%] text-xl font-monserrat font-semibold w-40 text-white text-nowrap bg-[#5196A6] rounded-xl">Sign up</button>
         </div>
         <div className="flex col-span-2 row-span-2 md:col-start-2 md:col-end-5 md:row-start-2 md:row-end-5">
@@ -53,7 +67,7 @@ export default function Home() {
         </div>
       </div>
       <About />
-      
+
     </div>
   );
 }
