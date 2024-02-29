@@ -11,16 +11,20 @@ import { useTranslation } from "react-i18next";
 import About from "@/components/About/About";
 import LoginModal from "@/components/LoginModal/LoginModal";
 import { useState } from "react";
+import RegisterModal from "@/components/RegisterModal/RegisterModal";
 
 
 
 export default function Home() {
   const [t, i18n] = useTranslation("global");
   const [loginModal, setLoginModal] = useState(false);
-
+  const [registerModal, setRegisterModal] = useState(false);
   const closeModal = (event) => {
     if (event.target.id === "modal") {
       setLoginModal(false);
+    }
+    if (event.target.id === "registerModal") {
+      setRegisterModal(false);
     }
   }
 
@@ -34,7 +38,12 @@ export default function Home() {
               <LoginModal />
             </div>
           }
-          <button className="flex items-center justify-center w-[inherit] h-[65%] text-xl font-monserrat font-semibold w-40 text-white text-nowrap bg-[#5196A6] rounded-xl">Sign up</button>
+          <button onClick={() => setRegisterModal(true)} className="flex items-center justify-center w-[inherit] h-[65%] text-xl font-monserrat font-semibold w-40 text-white text-nowrap bg-[#5196A6] rounded-xl">Sign up</button>
+          {registerModal &&
+            <div onClick={closeModal} id="registerModal" className="fixed top-0 left-0 w-full h-full z-[3] bg-[#000000b3]">
+              <RegisterModal />
+            </div>
+          }
         </div>
         <div className="flex col-span-2 row-span-2 md:col-start-2 md:col-end-5 md:row-start-2 md:row-end-5">
           <Image className="object-cover w-full" alt="telephone" src={telephone}></Image>

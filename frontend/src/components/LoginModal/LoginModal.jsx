@@ -60,7 +60,7 @@ export default function LoginModal() {
                 <p className="text-sm font-monserrat text-black w-[90%]">By continuing, you accept our terms of service. Please read our privacy policy.</p>
             </div>
             <div className="hidden md:flex w-[50%] rounded-r-3xl">
-                <Image className="w-full h-full object-cover rounded-r-3xl" alt="" src={login} />
+                <Image className="w-full h-full object-cover rounded-r-3xl" priority alt="" src={login} />
             </div>
         </div>
     )
