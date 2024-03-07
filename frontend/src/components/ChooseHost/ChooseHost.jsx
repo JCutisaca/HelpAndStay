@@ -6,7 +6,7 @@ import arrowUp from '@/assets/svg/arrowUp.svg'
 export default function ChooseHost () {
     return (
         <>
-            <div className="flex flex-col lg:flex-row w-screen mt-32">
+            <div className="flex flex-col lg:flex-row w-[99.5vw] mt-32">
                 <div className="w-full h-full relative cursor-pointer">
                     <Image className="h-[25rem] md:h-[30.5rem] lg:h-[45rem] object-cover" alt="" src={findHost} />
                     <div className="w-fit top-[80%] lg:top-[90%] right-[50%] left-[50%] flex absolute transform -translate-x-1/2 -translate-y-1/2">

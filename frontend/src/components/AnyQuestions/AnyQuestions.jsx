@@ -4,7 +4,7 @@ import arrowLeft from '@/assets/svg/arrowLeft.svg'
 
 export default function AnyQuestions() {
     return (
-        <div className="w-screen bg-[#CCB199CC] lg:h-[25rem] items-center flex flex-col lg:flex-row w-full pb-12 lg:pb-0">
+        <div className="w-[99.5vw] bg-[#CCB199CC] lg:h-[25rem] items-center flex flex-col lg:flex-row w-full pb-12 lg:pb-0">
             <div className="w-full flex justify-center m-10 lg:m-0">
                 <div className="flex items-center lg:h-[15rem] lg:w-[65%] lg:border-solid lg:border-r-2 border-white">
                     <h4 className="font-unbounded text-white text-xl md:text-3xl">Any questions?</h4>

@@ -1,12 +1,29 @@
 import { useEffect, useRef, useState } from 'react';
 import Calendar from '../Calendar/Calendar';
+import { getAllCountries } from '@/apiRequests/Register/getAllCountries';
+import { useTranslation } from 'react-i18next';
+import { getAllStatesByCountryId } from '@/apiRequests/Register/getAllStatesByCountryId';
 
 export default function RegisterModal() {
 
+    const [countries, setCountries] = useState(null)
+    const [states, setStates] = useState(null)
+    const [codes, setCodes] = useState(null)
 
     const [selectedCountry, setSelectedCountry] = useState(null);
+    const handleChangeCountry = (event) => {
+        const id = event.target.value
+        setSelectedCountry(id)
+        getAllStatesByCountryId(setStates, id)
+    }
+
     const [birthday, setBirthday] = useState()
-    const api = []
+
+    const [t, i18n] = useTranslation("global");
+
+    useEffect(() => {
+        getAllCountries(setCountries, setCodes);
+    }, [])
 
     return (
         <form className="absolute w-[90%] md:w-fit flex flex-col justify-around rounded-3xl border border-black shadow-2xl min-h-[30rem] top-[5rem] z-[5] left-[50%] transform -translate-x-1/2 rounded-3xl bg-white items-center">
@@ -25,13 +42,15 @@ export default function RegisterModal() {
                         </div>
                         <div>
                             <label className="font-monserrat text-[#626262] text-sm" htmlFor="City">City</label>
-                            <select className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" name="" id="">
+                            <select className="text-sm font-monserrat w-full text-[#626262] border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" name="" id="">
                                 <option name="dificultad" value="0">-Select an option-</option>
-                                <option name="dificultad" value="1">Very Easy</option>
-                                <option name="dificultad" value="2">Easy</option>
-                                <option name="dificultad" value="3">Moderate</option>
-                                <option name="dificultad" value="4">Difficult</option>
-                                <option name="dificultad" value="5">Very Difficult</option>
+                                {states?.map(state => {
+                                    return (
+                                        <option key={state} value={state}>
+                                            {state}
+                                        </option>
+                                    )
+                                })}
                             </select>
                         </div>
                         <div>
@@ -50,12 +69,12 @@ export default function RegisterModal() {
                             <div>
                                 <label className="font-monserrat text-[#626262] text-sm" htmlFor="Phone number">Phone number</label>
                                 <div className="flex flex-row justify-between">
-                                    <select className="text-sm font-monserrat text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1 w-[32%]" name="" id="">
+                                    <select className="text-sm font-monserrat text-[#626262] border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1 w-[32%]" name="" id="">
                                         <option name="dificultad" value="0">--</option>
-                                        {api?.map(country => {
+                                        {codes?.map(code => {
                                             return (
-                                                <option value={country.code}>
-                                                    {country.code}
+                                                <option key={code} value={code}>
+                                                    {code}
                                                 </option>
                                             )
                                         })}
@@ -65,8 +84,15 @@ export default function RegisterModal() {
                             </div>
                             <div>
                                 <label className="font-monserrat text-[#626262] text-sm" htmlFor="Country">Country</label>
-                                <select className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" name="" id="">
+                                <select className="text-sm font-monserrat w-full text-[#626262] border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" onChange={handleChangeCountry} name="" id="">
                                     <option name="dificultad" value="0">-Select an option-</option>
+                                    {countries?.map(country => {
+                                        return (
+                                            <option className='fon-monserrat' key={country.id} value={country.id}>
+                                                {i18n.language === "en" ? country.nameEn : nameEs}
+                                            </option>
+                                        )
+                                    })}
                                 </select>
                             </div>
                             <div>
