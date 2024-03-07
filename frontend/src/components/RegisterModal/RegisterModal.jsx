@@ -1,5 +1,3 @@
-import Image from 'next/image';
-// import api from './api.json'
 import { useEffect, useRef, useState } from 'react';
 import Calendar from '../Calendar/Calendar';
 
@@ -9,6 +7,7 @@ export default function RegisterModal() {
     const [selectedCountry, setSelectedCountry] = useState(null);
     const [birthday, setBirthday] = useState()
     const api = []
+
     return (
         <form className="absolute w-[90%] md:w-fit flex flex-col justify-around rounded-3xl border border-black shadow-2xl min-h-[30rem] top-[5rem] z-[5] left-[50%] transform -translate-x-1/2 rounded-3xl bg-white items-center">
             <p className="text-xl font-unbounded font-semibold text-left text-black w-[90%] mt-4 md:mt-0">Sign up</p>

@@ -2,13 +2,15 @@ import MailIcon from "../utils/MailIcon";
 import LockIcon from "../utils/LockIcon";
 import Image from "next/image";
 import login from '@/assets/images/login.jpg'
-import { signIn } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 
 
 export default function LoginModal() {
 
     const handleSignInGoogle = async () => await signIn("google", { redirect: false });
     const handleSignInFacebook = async () => await signIn("facebook", { redirect: false });
+    const {data} = useSession()
+    console.log(data);
     
 
     return (

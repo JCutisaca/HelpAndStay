@@ -50,10 +50,10 @@ export default function Home() {
         </div>
         <div className="flex flex-col items-center justify-center gap-2 col-span-2 row-start-4 row-end-4 bg-white z-[1] h-full md:col-start-1 md:col-end-4 md:row-start-4 md:row-end-6">
           <div className="w-full h-[50%] flex items-center justify-center">
-            <h1 className="font-unbounded text-3xl md:text-4xl lg:text-7xl">Where next?</h1>
+            <h1 className="font-unbounded text-3xl md:text-4xl lg:text-5xl">Where next?</h1>
           </div>
           <div className="w-full md:w-[80%] h-[50%] flex justify-end items-center">
-            <button className="font-monserrat font-semibold md:h-[3rem] text-xl text-white bg-[#F3A342] w-full rounded-xl md:w-[50%]">Join Help&Stay</button>
+            <button className="font-monserrat font-semibold md:h-[2.5rem] text-base text-white bg-[#F3A342] w-full rounded-xl md:w-[50%]">Join Help&Stay</button>
           </div>
         </div>
         <div className="col-span-1 row-start-5 row-end-9 md:col-start-5 md:row-start-1 md:row-end-9">

@@ -1,0 +1,86 @@
+[
+    {
+      "nameEn": "Andorra",
+      "nameEs": "Andorra",
+      "id": "AND",
+      "flag": "https://flagcdn.com/ad.svg",
+      "code": "+376"
+    },
+    {
+      "nameEn": "Argentina",
+      "nameEs": "Argentina",
+      "id": "ARG",
+      "flag": "https://flagcdn.com/ar.svg",
+      "code": "+54"
+    },
+    {
+      "nameEn": "Australia",
+      "nameEs": "Australia",
+      "id": "AUS",
+      "flag": "https://flagcdn.com/au.svg",
+      "code": "+61"
+    },
+    {
+      "nameEn": "Austria",
+      "nameEs": "Austria",
+      "id": "AUT",
+      "flag": "https://flagcdn.com/at.svg",
+      "code": "+43"
+    },
+    {
+      "nameEn": "Canada",
+      "nameEs": "Canadá",
+      "id": "CAN",
+      "flag": "https://flagcdn.com/ca.svg",
+      "code": "+1"
+    },
+    {
+      "nameEn": "Denmark",
+      "nameEs": "Dinamarca",
+      "id": "DNK",
+      "flag": "https://flagcdn.com/dk.svg",
+      "code": "+45"
+    },
+    {
+      "nameEn": "Germany",
+      "nameEs": "Alemania",
+      "id": "DEU",
+      "flag": "https://flagcdn.com/de.svg",
+      "code": "+49"
+    },
+    {
+      "nameEn": "Japan",
+      "nameEs": "Japón",
+      "id": "JPN",
+      "flag": "https://flagcdn.com/jp.svg",
+      "code": "+81"
+    },
+    {
+      "nameEn": "Netherlands",
+      "nameEs": "Países Bajos",
+      "id": "NLD",
+      "flag": "https://flagcdn.com/nl.svg",
+      "code": "+31"
+    },
+    {
+      "nameEn": "New Zealand",
+      "nameEs": "Nueva Zelanda",
+      "id": "NZL",
+      "flag": "https://flagcdn.com/nz.svg",
+      "code": "+64"
+    },
+    {
+      "nameEn": "Ukraine",
+      "nameEs": "Ucrania",
+      "id": "UKR",
+      "flag": "https://flagcdn.com/ua.svg",
+      "code": "+380"
+    },
+    {
+      "nameEn": "United States",
+      "nameEs": "Estados Unidos (USA)",
+      "id": "USA",
+      "flag": "https://flagcdn.com/us.svg",
+      "code": "+1"
+    }
+  ]

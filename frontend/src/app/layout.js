@@ -8,6 +8,7 @@ import { useTranslation, initReactI18next } from "react-i18next";
 import global_en from '@/languages/en/global.json'
 import global_es from '@/languages/es/global.json'
 import { useEffect } from "react";
+import AuthProvider from "@/components/Providers/AuthProvider/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -52,13 +53,15 @@ export default function RootLayout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Unbounded:wght@200..900&display=swap" rel="stylesheet" />
       </head>
       <body className={`bg-white ${inter.className}`}>
-        <div className="ml-4 mr-4">
-          <NavBar />
-        </div>
-        <div className="ml-4 mr-4">
-          {children}
-        </div>
-        <Footer />
+        <AuthProvider >
+          <div className="ml-4 mr-4">
+            <NavBar />
+          </div>
+          <div className="ml-4 mr-4">
+            {children}
+          </div>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

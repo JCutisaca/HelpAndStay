@@ -13,43 +13,43 @@ export default function AnyQuestions() {
             <div className="flex flex-col w-[85%]">
                 <div className="w-full lg:w-[85%] border-solid flex justify-between border-b-2 border-t-2 border-white">
                     <a className="flex justify-between w-full" href="/1">
-                        <p className="text-white font-monserrat text-sm md:text-lg lg:text-2xl lg-font-semibold">What is Help&Stay?</p>
+                        <p className="text-white font-monserrat text-sm md:text-lg lg-font-semibold">What is Help&Stay?</p>
                         <Image className="w-4 md:w-8" alt="" src={arrowLeft} />
                     </a>
                 </div>
                 <div className="w-full lg:w-[85%] border-solid flex justify-between border-b-2 border-white">
                     <a className="flex justify-between w-full" href="/2">
-                        <p className="text-white font-monserrat text-sm md:text-lg lg:text-2xl lg-font-semibold">Is it safe?</p>
+                        <p className="text-white font-monserrat text-sm md:text-lg lg-font-semibold">Is it safe?</p>
                         <Image className="w-4 md:w-8" alt="" src={arrowLeft} />
                     </a>
                 </div>
                 <div className="w-full lg:w-[85%] border-solid flex justify-between border-b-2 border-white">
                     <a className="flex justify-between w-full" href="/3">
-                        <p className="text-white font-monserrat text-sm md:text-lg lg:text-2xl lg-font-semibold">What kind of work do I have to do?</p>
+                        <p className="text-white font-monserrat text-sm md:text-lg lg-font-semibold">What kind of work do I have to do?</p>
                         <Image className="w-4 md:w-8" alt="" src={arrowLeft} />
                     </a>
                 </div>
                 <div className="w-full lg:w-[85%] border-solid flex justify-between border-b-2 border-white">
                     <a className="flex justify-between w-full" href="/4">
-                        <p className="text-white font-monserrat text-sm md:text-lg lg:text-2xl lg-font-semibold">What is verification?</p>
+                        <p className="text-white font-monserrat text-sm md:text-lg lg-font-semibold">What is verification?</p>
                         <Image className="w-4 md:w-8" alt="" src={arrowLeft} />
                     </a>
                 </div>
                 <div className="w-full lg:w-[85%] border-solid flex justify-between border-b-2 border-white">
                     <a className="flex justify-between w-full" href="/5">
-                        <p className="text-white font-monserrat text-sm md:text-lg lg:text-2xl lg-font-semibold">How to find housing?</p>
+                        <p className="text-white font-monserrat text-sm md:text-lg lg-font-semibold">How to find housing?</p>
                         <Image className="w-4 md:w-8" alt="" src={arrowLeft} />
                     </a>
                 </div>
                 <div className="w-full lg:w-[85%] border-solid flex justify-between border-b-2 border-white">
                     <a className="flex justify-between w-full" href="/6">
-                        <p className="text-white font-monserrat text-sm md:text-lg lg:text-2xl lg-font-semibold">How to host guest?</p>
+                        <p className="text-white font-monserrat text-sm md:text-lg lg-font-semibold">How to host guest?</p>
                         <Image className="w-4 md:w-8" alt="" src={arrowLeft} />
                     </a>
                 </div>
                 <div className="w-full lg:w-[85%] border-solid flex justify-between border-b-2 border-white">
                     <a className="flex justify-between w-full" href="/7">
-                        <p className="text-white font-monserrat text-sm md:text-lg lg:text-2xl lg-font-semibold">Where to report violations?</p>
+                        <p className="text-white font-monserrat text-sm md:text-lg lg-font-semibold">Where to report violations?</p>
                         <Image className="w-4 md:w-8" alt="" src={arrowLeft} />
                     </a>
                 </div>
