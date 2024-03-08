@@ -32,15 +32,18 @@ export default function RegisterModal() {
                 <div className="w-full h-full md:w-[50%] flex flex-col items-center justify-evenly">
                     <div className="w-[80%] flex flex-col items-left gap-2">
                         <div>
-                            <label className="font-monserrat text-[#626262] text-sm" htmlFor="Full Name">Full Name</label>
+                            <label className="font-monserrat text-[#626262] text-sm" htmlFor="Full Name">First Name</label>
+                            <input className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type="text" name="" id="" />
+                        </div>
+                        <div>
+                            <label className="font-monserrat text-[#626262] text-sm" htmlFor="Full Name">Last Name</label>
                             <input className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type="text" name="" id="" />
                         </div>
                         <div className='relative'>
                             <label className="font-monserrat text-[#626262] text-sm" htmlFor="Birthday">Birthday</label>
-                            {/* <input className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type="date" name="" id="" /> */}
                             <Calendar birthday={birthday} setBirthday={setBirthday} />
                         </div>
-                        <div>
+                        <div className='hidden md:block'>
                             <label className="font-monserrat text-[#626262] text-sm" htmlFor="City">City</label>
                             <select className="text-sm font-monserrat w-full text-[#626262] border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" name="" id="">
                                 <option name="dificultad" value="0">-Select an option-</option>
@@ -53,7 +56,7 @@ export default function RegisterModal() {
                                 })}
                             </select>
                         </div>
-                        <div>
+                        <div className='hidden md:block'>
                             <label className="font-monserrat text-[#626262] text-sm" htmlFor="Password">Password</label>
                             <input className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type="text" name="" id=""></input>
                         </div>
@@ -64,6 +67,10 @@ export default function RegisterModal() {
                         <div className="w-[80%] flex flex-col items-left gap-2">
                             <div>
                                 <label className="font-monserrat text-[#626262] text-sm" htmlFor="Email address">Email address</label>
+                                <input className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type="text" name="" id="" />
+                            </div>
+                            <div>
+                                <label className="font-monserrat text-[#626262] text-sm" htmlFor="Email address">Confirm Email</label>
                                 <input className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type="text" name="" id="" />
                             </div>
                             <div>
@@ -94,6 +101,23 @@ export default function RegisterModal() {
                                         )
                                     })}
                                 </select>
+                            </div>
+                            <div className='md:hidden'>
+                                <label className="font-monserrat text-[#626262] text-sm" htmlFor="City">City</label>
+                                <select className="text-sm font-monserrat w-full text-[#626262] border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" name="" id="">
+                                    <option name="dificultad" value="0">-Select an option-</option>
+                                    {states?.map(state => {
+                                        return (
+                                            <option key={state} value={state}>
+                                                {state}
+                                            </option>
+                                        )
+                                    })}
+                                </select>
+                            </div>
+                            <div className='md:hidden'>
+                                <label className="font-monserrat text-[#626262] text-sm" htmlFor="Password">Password</label>
+                                <input className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type="text" name="" id=""></input>
                             </div>
                             <div>
                                 <label className="font-monserrat text-[#626262] text-sm" htmlFor="Confirm password">Confirm password</label>

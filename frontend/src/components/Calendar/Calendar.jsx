@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react"
+import { useTranslation } from "react-i18next"
 
 
 export default function Calendar({ setBirthday, birthday }) {
+    const [t, i18n] = useTranslation("global")
     const [calendarModal, setCalendarModal] = useState(false)
-    const [yearModal, setYearModal] = useState(true)
+    const [yearModal, setYearModal] = useState(false)
     const closeModal = (event) => {
         if (event.target.id === "modalCalendar") {
             setCalendarModal(false);
@@ -18,20 +20,26 @@ export default function Calendar({ setBirthday, birthday }) {
     const yearsArray = Array.from({ length: 100 }, (_, index) => (year - index));
 
     const handlePrevMonth = () => {
-        setCurrentMonthIndex(prev => {
-            const newMonthIndex = (prev - 1 + 12) % 12;
-            monthCalendar(newMonthIndex)
+        setCurrentMonthIndex((prevMonthIndex) => {
+            const newMonthIndex = (prevMonthIndex - 1 + 12) % 12;
+            const newYearIndex = newMonthIndex === 11 ? currentYear - 1 : currentYear;
+            setCurrentYear(newYearIndex);
+            monthCalendar(newMonthIndex, newYearIndex);
             return newMonthIndex;
         });
     };
 
     const handleNextMonth = () => {
-        setCurrentMonthIndex(prev => {
-            const newMonthIndex = (prev + 1) % 12;
-            monthCalendar(newMonthIndex)
+        setCurrentMonthIndex((prevMonthIndex) => {
+            const newMonthIndex = (prevMonthIndex + 1) % 12;
+            const newYearIndex = newMonthIndex === 0 ? currentYear + 1 : currentYear;
+            setCurrentYear(newYearIndex);
+            monthCalendar(newMonthIndex, newYearIndex);
             return newMonthIndex;
         });
     };
+
+
 
     const monthCalendar = (newMonthIndex, newYearIndex) => {
         const month = newMonthIndex !== undefined ? newMonthIndex : currentMonthIndex;
@@ -44,25 +52,19 @@ export default function Calendar({ setBirthday, birthday }) {
         const daysOfCalendar = Array.from({ length: 42 }, (_, index) => {
             const day = index + 1 - firstDayOfWeek;
             if (day > 0 && day <= daysOfMonth) {
-                return { day: day, month: month };
+                return { day: day, month: month, year: year };
             } else if (day <= 0) {
                 const prevMonth = month === 0 ? 11 : month - 1;
-                return { day: daysOfPrevMonth + day, month: prevMonth };
+                const prevYear = month === 0 ? year - 1 : year;
+                return { day: daysOfPrevMonth + day, month: prevMonth, year: prevYear };
             } else {
                 const nextMonth = month === 11 ? 0 : month + 1;
-                return { day: day - daysOfMonth, month: nextMonth };
+                const nextYear = month === 11 ? year + 1 : year;
+                return { day: day - daysOfMonth, month: nextMonth, year: nextYear };
             }
         });
 
         setCurrentMonth(daysOfCalendar);
-    };
-
-    const handlePrevYear = () => {
-        setCurrentYear(prev => prev - 1);
-    };
-
-    const handleNextYear = () => {
-        setCurrentYear(prev => prev + 1);
     };
 
     const handleDayClick = (day) => {
@@ -76,7 +78,10 @@ export default function Calendar({ setBirthday, birthday }) {
         setCalendarModal(false);
     };
 
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const monthsEn = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const monthsEs = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    const daysEn = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const daysEs = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"];
 
     useEffect(() => {
         monthCalendar()
@@ -90,15 +95,22 @@ export default function Calendar({ setBirthday, birthday }) {
             {
                 calendarModal &&
                 <div onClick={closeModal} id="modalCalendar" className="fixed top-0 left-0 w-full h-full z-[3]">
-                    <div className="absolute top-[10.5rem] md:top-[14rem] left-[14%] md:left-[0.5rem] flex flex-col bg-white border border-solid border-1 border-[#000000b3] w-[300px] rounded-3xl">
+                    <div className="absolute top-[14.5rem] md:top-[16rem] left-[14%] md:left-[0.5rem] flex flex-col bg-white border border-solid border-1 border-[#000000b3] w-[300px] rounded-3xl">
                         <div className="flex flex-row justify-center gap-7 h-8 items-center">
                             <span className="cursor-pointer" onClick={handlePrevMonth}>&lt;</span>
                             <p className="w-16" onChange={(e) => setCurrentMonthIndex(e.target.selectedIndex)} name="" id="">
-                                {months?.length && months.map((month, index) => {
+                                {i18n.language === "en" ? monthsEn.map((month, index) => {
                                     if (index === currentMonthIndex) {
                                         return month;
                                     }
-                                })}
+                                })
+                                    :
+                                    monthsEs.map((month, index) => {
+                                        if (index === currentMonthIndex) {
+                                            return month;
+                                        }
+                                    })
+                                }
                             </p>
                             <div className="w-16 flex justify-around cursor-pointer transition-transform duration-300" onClick={() => setYearModal(!yearModal)}>
                                 <p>{currentYear}</p>
@@ -128,19 +140,30 @@ export default function Calendar({ setBirthday, birthday }) {
                             <span className="cursor-pointer" onClick={handleNextMonth}>&gt;</span>
                         </div>
                         <div className="flex justify-around pl-4 pr-4">
-                            <span className="font-monserrat text-xs w-[36px] text-center">Dom</span>
-                            <span className="font-monserrat text-xs w-[36px] text-center">Lun</span>
-                            <span className="font-monserrat text-xs w-[36px] text-center">Mar</span>
-                            <span className="font-monserrat text-xs w-[36px] text-center">Mier</span>
-                            <span className="font-monserrat text-xs w-[36px] text-center">Jue</span>
-                            <span className="font-monserrat text-xs w-[36px] text-center">Vie</span>
-                            <span className="font-monserrat text-xs w-[36px] text-center">Sab</span>
+                            {i18n.language === "en" ? daysEn.map(day => {
+                                return (
+                                    <span className="font-monserrat text-xs w-[36px] text-center">{day}</span>
+                                )
+                            })
+                                :
+                                daysEs.map(day => {
+                                    return (
+                                        <span className="font-monserrat text-xs w-[36px] text-center">{day}</span>
+                                    )
+                                })
+                            }
                         </div>
                         <div className="flex flex-wrap justify-around text-center mt-2 pl-4 pr-4">
-                            {currentMonth?.length && currentMonth.map(({ day, month }, index) => {
+                            {currentMonth?.length && currentMonth.map(({ day, month, year }, index) => {
                                 const isNotCurrentMonth = month !== currentMonthIndex;
                                 const bgColor = isNotCurrentMonth ? 'text-[#4848484d]' : '';
-                                return <button className={`flex justify-center items-center rounded-full font-monserrat text-xs w-[36px] h-[36px] ${bgColor}`}
+
+                                const formattedDay = day < 10 ? `0${day}` : `${day}`;
+                                const formattedMonth = month + 1 < 10 ? `0${month + 1}` : `${month + 1}`;
+                                const formattedDate = `${formattedDay}/${formattedMonth}/${year}`;
+
+                                const bgSelectedDay = formattedDate === birthday ? 'bg-[#1976d2] text-white' : '';
+                                return <button className={`flex justify-center items-center rounded-full font-monserrat text-xs w-[36px] h-[36px] ${bgColor} ${bgSelectedDay}`}
                                     key={index}
                                     onClick={() => handleDayClick(day)}
                                 >{day}</button>
