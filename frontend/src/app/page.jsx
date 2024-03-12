@@ -34,13 +34,13 @@ export default function Home() {
         <div className="flex items-center gap-4 w-full h-full justify-between col-span-2 md:hidden">
           <button onClick={() => setLoginModal(true)} className="flex items-center justify-center w-[inherit] h-[65%] text-xl font-monserrat font-semibold w-40 text-[#5196A6] border border-solid border-4 rounded-xl">Sign in</button>
           {loginModal &&
-            <div onClick={closeModal} id="modal" className="fixed top-0 left-0 w-full h-full z-[3] bg-[#000000b3]">
+            <div onClick={closeModal} id="modal" className="overflow-y-auto inset-0 fixed top-0 left-0 w-full h-full z-[3] bg-[#000000b3]">
               <LoginModal />
             </div>
           }
           <button onClick={() => setRegisterModal(true)} className="flex items-center justify-center w-[inherit] h-[65%] text-xl font-monserrat font-semibold w-40 text-white text-nowrap bg-[#5196A6] rounded-xl">Sign up</button>
           {registerModal &&
-            <div onClick={closeModal} id="registerModal" className="fixed top-0 left-0 w-full h-full z-[3] bg-[#000000b3]">
+            <div onClick={closeModal} id="registerModal" className="block overflow-y-auto fixed top-0 left-0 w-full h-full z-[3] bg-[#000000b3]">
               <RegisterModal />
             </div>
           }

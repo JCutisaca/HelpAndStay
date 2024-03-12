@@ -38,12 +38,12 @@ export default function NavBar() {
                 <button onClick={() => setRegisterModal(true)} className="text-base font-monserrat font-semibold w-40 text-white text-nowrap bg-[#5196A6] rounded-xl hover:bg-[#F3A342] hover:text-white hover:border-none transition-all duration-500">Sign up</button>
             </div>
             {loginModal &&
-                <div onClick={closeModal} id="modal" className="fixed top-0 left-0 w-full h-full z-[3] bg-[#000000b3]">
+                <div onClick={closeModal} id="modal" className="fixed top-0 overflow-y-auto left-0 w-full h-full z-[3] bg-[#000000b3]">
                     <LoginModal />
                 </div>
             }
             {registerModal &&
-                <div onClick={closeModal} id="registerModal" className="fixed top-0 left-0 w-full h-full z-[3] bg-[#000000b3]">
+                <div onClick={closeModal} id="registerModal" className="block fixed overflow-y-auto top-0 left-0 w-full h-full z-[3] bg-[#000000b3]">
                     <RegisterModal />
                 </div>
             }
