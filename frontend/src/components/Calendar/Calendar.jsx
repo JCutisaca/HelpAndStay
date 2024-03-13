@@ -6,13 +6,15 @@ export default function Calendar({ setBirthday, birthday }) {
     const [t, i18n] = useTranslation("global")
     const [calendarModal, setCalendarModal] = useState(false)
     const [yearModal, setYearModal] = useState(false)
+    const yearModalRef = useRef(null);
     const closeModal = (event) => {
         if (event.target.id === "modalCalendar") {
             setCalendarModal(false);
         }
     }
-
     const [currentMonth, setCurrentMonth] = useState();
+    // const initialYear = birthday ? new Date(birthday).getFullYear() : new Date().getFullYear();
+    // const initialMonthIndex = birthday ? new Date(birthday).getMonth() : new Date().getMonth();
     const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
     const [currentMonthIndex, setCurrentMonthIndex] = useState(new Date().getMonth());
 
@@ -87,6 +89,16 @@ export default function Calendar({ setBirthday, birthday }) {
         monthCalendar()
     }, [])
 
+    useEffect(() => {
+        if (yearModalRef.current && yearsArray.includes(currentYear)) {
+            const selectedYearIndex = yearsArray.indexOf(currentYear);
+            const modalHeight = yearModalRef.current.clientHeight;
+            const buttonHeight = 16
+            const scrollToY = (selectedYearIndex * buttonHeight) - (modalHeight / 2) + (buttonHeight / 2);
+            yearModalRef.current.scrollTop = scrollToY;
+        }
+    }, [yearModalRef, currentYear, yearsArray]);
+
     return (
         <>
             <div onClick={() => setCalendarModal(true)}>
@@ -100,7 +112,7 @@ export default function Calendar({ setBirthday, birthday }) {
                     <div className="absolute top-[14.5rem] md:top-[16rem] left-[14%] md:left-[0.5rem] flex flex-col bg-white border border-solid border-1 border-[#000000b3] w-[300px] rounded-3xl">
                         <div className="flex flex-row justify-center gap-7 h-8 items-center">
                             <span className="cursor-pointer" onClick={handlePrevMonth}>&lt;</span>
-                            <p className="w-16" onChange={(e) => setCurrentMonthIndex(e.target.selectedIndex)} name="" id="">
+                            <p className="w-16" onChange={(event) => setCurrentMonthIndex(event.target.selectedIndex)} name="" id="">
                                 {i18n.language === "en" ? monthsEn.map((month, index) => {
                                     if (index === currentMonthIndex) {
                                         return month;
@@ -119,7 +131,7 @@ export default function Calendar({ setBirthday, birthday }) {
                                 {!yearModal ? <p className="flex text-xs items-center">&#9660;</p> : <p className="flex text-xs items-center">&#9650;</p>}
                             </div>
                             {yearModal &&
-                                <div className="bg-white absolute w-[300px] h-[216px] top-[3.5rem] rounded-b-3xl flex gap-[10px] text-center flex-wrap overflow-y-auto border-l border-r border-solid border-1 border-[#000000b3]">
+                                <div ref={yearModalRef} className="bg-white absolute w-[300px] h-[216px] top-[3.5rem] rounded-b-3xl flex gap-[10px] text-center flex-wrap overflow-y-auto border-l border-r border-solid border-1 border-[#000000b3]">
                                     {yearsArray?.map(year => {
                                         const isCurrentYear = year === currentYear;
                                         const bgColor = isCurrentYear ? 'bg-[#1976d2] hover:bg-[#1565c0] text-white' : 'hover:bg-[#0000000a]';
@@ -166,7 +178,7 @@ export default function Calendar({ setBirthday, birthday }) {
 
                                 const bgSelectedDay = formattedDate === birthday ? 'bg-[#1976d2] text-white' : '';
                                 return <button className={`flex justify-center items-center rounded-full font-monserrat text-xs w-[36px] h-[36px] ${bgColor} ${bgSelectedDay}`}
-                                    key={index}
+                                    key={`${year}-${month}-${day}`}
                                     onClick={() => handleDayClick(day)}
                                 >{day}</button>
                             })}

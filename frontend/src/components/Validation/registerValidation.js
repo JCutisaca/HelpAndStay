@@ -114,7 +114,7 @@ export const validateConfirmEmail = (form, setErrors, errors) => {
             confirmEmail: "errors.confirmEmailInvalid"
         })
         return;
-    } 
+    }
     if (form.email !== confirmEmail) {
         setErrors({
             ...errors,
@@ -125,6 +125,88 @@ export const validateConfirmEmail = (form, setErrors, errors) => {
         setErrors({
             ...errors,
             confirmEmail: ""
+        })
+    }
+}
+
+export const validatePassword = (form, setErrors, errors) => {
+    const password = form.password.trim();
+    if (!password.length) {
+        setErrors({
+            ...errors,
+            password: "errors.passwordEmpty"
+        })
+        return;
+    }
+    if (password.length < 8) {
+        setErrors({
+            ...errors,
+            password: "errors.passwordShort"
+        })
+        return;
+    }
+    if (password.length > 20) {
+        setErrors({
+            ...errors,
+            password: "errors.passwordLong"
+        })
+        return;
+    }
+    if (password.length < 8) {
+        setErrors({
+            ...errors,
+            password: "errors.passwordShort"
+        })
+        return;
+    } else {
+        setErrors({
+            ...errors,
+            password: ""
+        })
+    }
+}
+
+export const validateConfirmPassword = (form, setErrors, errors) => {
+    const confirmPassword = form.confirmPassword.trim();
+    if (!confirmPassword.length) {
+        setErrors({
+            ...errors,
+            confirmPassword: "errors.confirmPasswordEmpty"
+        })
+        return;
+    }
+    if (confirmPassword.length < 8) {
+        setErrors({
+            ...errors,
+            confirmPassword: "errors.confirmPasswordShort"
+        })
+        return;
+    }
+    if (confirmPassword.length > 20) {
+        setErrors({
+            ...errors,
+            confirmPassword: "errors.confirmPasswordLong"
+        })
+        return;
+    }
+    if (confirmPassword.length < 8) {
+        setErrors({
+            ...errors,
+            confirmPassword: "errors.confirmPasswordShort"
+        })
+        return;
+    }
+    if (form.password !== confirmPassword) {
+        setErrors({
+            ...errors,
+            confirmPassword: "errors.confirmPasswordDiscrepance"
+        })
+        return;
+    } 
+    else {
+        setErrors({
+            ...errors,
+            confirmPassword: ""
         })
     }
 }

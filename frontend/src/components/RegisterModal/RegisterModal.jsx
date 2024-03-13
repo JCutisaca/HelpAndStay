@@ -3,7 +3,7 @@ import Calendar from '../Calendar/Calendar';
 import { getAllCountries } from '@/apiRequests/Register/getAllCountries';
 import { useTranslation } from 'react-i18next';
 import { getAllStatesByCountryId } from '@/apiRequests/Register/getAllStatesByCountryId';
-import { validateConfirmEmail, validateEmail, validateFirstName, validateLastName } from '../Validation/registerValidation';
+import { validateConfirmEmail, validateConfirmPassword, validateEmail, validateFirstName, validateLastName, validatePassword } from '../Validation/registerValidation';
 
 export default function RegisterModal() {
 
@@ -45,13 +45,16 @@ export default function RegisterModal() {
     const [selectedCountry, setSelectedCountry] = useState(null);
 
     const handleChangeInput = (event) => {
+        const value = event.target.value.trim()
         setForm({
             ...form,
-            [event.target.name]: event.target.value
+            [event.target.name]: value
         })
     }
     const handleBlurFirstName = () => { validateFirstName(form, setErrors, errors) };
     const handleBlurLastName = () => { validateLastName(form, setErrors, errors) };
+    const handleBlurPassword = () => { validatePassword(form, setErrors, errors) };
+    const handleBlurConfirmPassword = () => { validateConfirmPassword(form, setErrors, errors) };
     const handleBlurEmail = () => { validateEmail(form, setErrors, errors) };
     const handleBlurConfirmEmail = () => { validateConfirmEmail(form, setErrors, errors) };
 
@@ -104,7 +107,8 @@ export default function RegisterModal() {
                         <div className='hidden md:block'>
                             <label className="font-monserrat text-[#626262] text-sm" htmlFor="Password">Password</label>
                             <div className='relative'>
-                                <input onChange={handleChangeInput} className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type={views.password ? "text" : "password"} name="password"></input>
+                                <input value={form.password} onBlur={handleBlurPassword} onChange={handleChangeInput} className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type={views.password ? "text" : "password"} name="password"></input>
+                                {errors?.password && <p className='text-xs absolute text-[#FF0000]'>{errors.password}</p>}
                                 <span onClick={() => setViews({ ...views, password: !views.password })} className='absolute top-[0.5rem] right-[0.5rem] cursor-pointer'>
                                     {views.password ?
                                         <svg viewBox="0 0 24 24" aria-hidden="true" className="w-4"><g><path d="M3.693 21.707l-1.414-1.414 2.429-2.429c-2.479-2.421-3.606-5.376-3.658-5.513l-.131-.352.131-.352c.133-.353 3.331-8.648 10.937-8.648 2.062 0 3.989.621 5.737 1.85l2.556-2.557 1.414 1.414L3.693 21.707zm-.622-9.706c.356.797 1.354 2.794 3.051 4.449l2.417-2.418c-.361-.609-.553-1.306-.553-2.032 0-2.206 1.794-4 4-4 .727 0 1.424.192 2.033.554l2.263-2.264C14.953 5.434 13.512 5 11.986 5c-5.416 0-8.258 5.535-8.915 7.001zM11.986 10c-1.103 0-2 .897-2 2 0 .178.023.352.067.519l2.451-2.451c-.167-.044-.341-.067-.519-.067zm10.951 1.647l.131.352-.131.352c-.133.353-3.331 8.648-10.937 8.648-.709 0-1.367-.092-2-.223v-2.047c.624.169 1.288.27 2 .27 5.415 0 8.257-5.533 8.915-7-.252-.562-.829-1.724-1.746-2.941l1.438-1.438c1.53 1.971 2.268 3.862 2.33 4.027z"></path></g></svg>
@@ -142,7 +146,11 @@ export default function RegisterModal() {
                                             )
                                         })}
                                     </select>
-                                    <input onChange={handleChangeInput} className="text-sm font-monserrat w-[65%] text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" name='phoneNumber' type="number" />
+                                    <input style={{
+                                        WebkitAppearance: 'none',
+                                        margin: 0,
+                                        MozAppearance: 'textfield',
+                                    }} onChange={handleChangeInput} className="appearance-none text-sm font-monserrat w-[65%] text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" name='phoneNumber' type="number" />
                                 </div>
                             </div>
                             <div>
@@ -174,7 +182,8 @@ export default function RegisterModal() {
                             <div className='md:hidden'>
                                 <label className="font-monserrat text-[#626262] text-sm" htmlFor="Password">Password</label>
                                 <div className='relative'>
-                                    <input onChange={handleChangeInput} className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type={views.password ? "text" : "password"} name="password"></input>
+                                    <input value={form.password} onBlur={validatePassword} onChange={handleChangeInput} className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type={views.password ? "text" : "password"} name="password"></input>
+                                    {errors?.password && <p className='text-xs absolute text-[#FF0000]'>{errors.password}</p>}
                                     <span onClick={() => setViews({ ...views, password: !views.password })} className='absolute top-[0.5rem] right-[0.5rem] cursor-pointer'>
                                         {views.password ?
                                             <svg viewBox="0 0 24 24" aria-hidden="true" className="w-4"><g><path d="M3.693 21.707l-1.414-1.414 2.429-2.429c-2.479-2.421-3.606-5.376-3.658-5.513l-.131-.352.131-.352c.133-.353 3.331-8.648 10.937-8.648 2.062 0 3.989.621 5.737 1.85l2.556-2.557 1.414 1.414L3.693 21.707zm-.622-9.706c.356.797 1.354 2.794 3.051 4.449l2.417-2.418c-.361-.609-.553-1.306-.553-2.032 0-2.206 1.794-4 4-4 .727 0 1.424.192 2.033.554l2.263-2.264C14.953 5.434 13.512 5 11.986 5c-5.416 0-8.258 5.535-8.915 7.001zM11.986 10c-1.103 0-2 .897-2 2 0 .178.023.352.067.519l2.451-2.451c-.167-.044-.341-.067-.519-.067zm10.951 1.647l.131.352-.131.352c-.133.353-3.331 8.648-10.937 8.648-.709 0-1.367-.092-2-.223v-2.047c.624.169 1.288.27 2 .27 5.415 0 8.257-5.533 8.915-7-.252-.562-.829-1.724-1.746-2.941l1.438-1.438c1.53 1.971 2.268 3.862 2.33 4.027z"></path></g></svg>
@@ -187,7 +196,8 @@ export default function RegisterModal() {
                             <div>
                                 <label className="font-monserrat text-[#626262] text-sm" htmlFor="Confirm password">Confirm password</label>
                                 <div className='relative'>
-                                    <input onChange={handleChangeInput} className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type={views.confirmPassword ? "text" : "password"} name="confirmPassword"></input>
+                                    <input value={form.confirmPassword} onBlur={handleBlurConfirmPassword} onChange={handleChangeInput} className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type={views.confirmPassword ? "text" : "password"} name="confirmPassword"></input>
+                                    {errors?.confirmPassword && <p className='text-xs absolute text-[#FF0000]'>{errors.confirmPassword}</p>}
                                     <span onClick={() => setViews({ ...views, confirmPassword: !views.confirmPassword })} className='absolute top-[0.5rem] right-[0.5rem] cursor-pointer'>
                                         {views.confirmPassword ?
                                             <svg viewBox="0 0 24 24" aria-hidden="true" className="w-4"><g><path d="M3.693 21.707l-1.414-1.414 2.429-2.429c-2.479-2.421-3.606-5.376-3.658-5.513l-.131-.352.131-.352c.133-.353 3.331-8.648 10.937-8.648 2.062 0 3.989.621 5.737 1.85l2.556-2.557 1.414 1.414L3.693 21.707zm-.622-9.706c.356.797 1.354 2.794 3.051 4.449l2.417-2.418c-.361-.609-.553-1.306-.553-2.032 0-2.206 1.794-4 4-4 .727 0 1.424.192 2.033.554l2.263-2.264C14.953 5.434 13.512 5 11.986 5c-5.416 0-8.258 5.535-8.915 7.001zM11.986 10c-1.103 0-2 .897-2 2 0 .178.023.352.067.519l2.451-2.451c-.167-.044-.341-.067-.519-.067zm10.951 1.647l.131.352-.131.352c-.133.353-3.331 8.648-10.937 8.648-.709 0-1.367-.092-2-.223v-2.047c.624.169 1.288.27 2 .27 5.415 0 8.257-5.533 8.915-7-.252-.562-.829-1.724-1.746-2.941l1.438-1.438c1.53 1.971 2.268 3.862 2.33 4.027z"></path></g></svg>
