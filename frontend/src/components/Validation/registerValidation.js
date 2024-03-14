@@ -151,13 +151,6 @@ export const validatePassword = (form, setErrors, errors) => {
             password: "errors.passwordLong"
         })
         return;
-    }
-    if (password.length < 8) {
-        setErrors({
-            ...errors,
-            password: "errors.passwordShort"
-        })
-        return;
     } else {
         setErrors({
             ...errors,
@@ -202,11 +195,125 @@ export const validateConfirmPassword = (form, setErrors, errors) => {
             confirmPassword: "errors.confirmPasswordDiscrepance"
         })
         return;
-    } 
+    }
     else {
         setErrors({
             ...errors,
             confirmPassword: ""
+        })
+    }
+}
+
+export const validateBirthday = (formattedDate, setErrors, errors) => {
+    const [day, month, year] = formattedDate?.split('/').map(Number);
+    const birthdayDate = new Date(year, month - 1, day, 12, 0, 0, 0);
+    const currentDate = new Date();
+
+    let yearOld = currentDate.getFullYear() - birthdayDate.getFullYear();
+
+    if (birthdayDate.getMonth() > currentDate.getMonth() || (birthdayDate.getMonth() === currentDate.getMonth() && birthdayDate.getDate() > currentDate.getDate())) {
+        yearOld--;
+    }
+    if (!formattedDate?.length) {
+        setErrors({
+            ...errors,
+            birthday: "errors.birthdayEmpty"
+        })
+        return;
+    }
+    if (yearOld < 18) {
+        setErrors({
+            ...errors,
+            birthday: "errors.birthdayAge"
+        })
+        return;
+    } else {
+        setErrors({
+            ...errors,
+            birthday: ""
+        })
+    }
+}
+
+export const validatePhoneNumber = (form, setErrors, errors) => {
+    const code = form?.codeNumber;
+    const phoneNumber = form?.phoneNumber?.trim();
+    console.log(!code.length);
+    if (!code.length) {
+        setErrors({
+            ...errors,
+            phoneNumber: "errors.codeNumberEmpty"
+        })
+        return
+    }
+    if (!phoneNumber.length) {
+        setErrors({
+            ...errors,
+            phoneNumber: "errors.phoneNumberEmpty"
+        })
+        return
+    }
+    if (phoneNumber.length < 6) {
+        setErrors({
+            ...errors,
+            phoneNumber: "errors.phoneNumberShort"
+        })
+        return
+    } else {
+        setErrors({
+            ...errors,
+            phoneNumber: ""
+        })
+    }
+}
+
+export const validateCodeNumber = (form, setErrors, errors) => {
+    const code = form.codeNumber;
+    if (!code) {
+        setErrors({
+            ...errors,
+            codeNumber: "errors.codeNumberEmpty"
+        })
+        return
+    } else {
+        setErrors({
+            ...errors,
+            codeNumber: ""
+        })
+    }
+    if (errors?.phoneNumber) {
+        validatePhoneNumber(form, setErrors, errors)
+    }
+}
+
+export const validateCountry = (form, setErrors, errors) => {
+    const country = form?.country?.trim();
+    if (!country?.length) {
+        setErrors({
+            ...errors,
+            country: "errors.countryEmpty"
+        })
+        return
+    } else {
+        setErrors({
+            ...errors,
+            country: ""
+        })
+    }
+}
+
+export const validateCity = (form, setErrors, errors) => {
+    const city = form?.city?.trim();
+    if (!city?.length) {
+        setErrors({
+            ...errors,
+            city: "errors.cityEmpty"
+        })
+        return
+    } else {
+        setErrors({
+            ...errors,
+            city: ""
         })
     }
 }

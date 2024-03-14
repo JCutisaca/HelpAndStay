@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
+import { validateBirthday } from "../Validation/registerValidation"
 
 
-export default function Calendar({ setBirthday, birthday }) {
+export default function Calendar({ setBirthday, birthday, errors, setErrors }) {
     const [t, i18n] = useTranslation("global")
     const [calendarModal, setCalendarModal] = useState(false)
     const [yearModal, setYearModal] = useState(false)
@@ -11,10 +12,15 @@ export default function Calendar({ setBirthday, birthday }) {
         if (event.target.id === "modalCalendar") {
             setCalendarModal(false);
         }
+        if(!birthday?.length) {
+            setErrors({
+                ...errors,
+                birthday: "error"
+            })
+        }
     }
     const [currentMonth, setCurrentMonth] = useState();
-    // const initialYear = birthday ? new Date(birthday).getFullYear() : new Date().getFullYear();
-    // const initialMonthIndex = birthday ? new Date(birthday).getMonth() : new Date().getMonth();
+
     const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
     const [currentMonthIndex, setCurrentMonthIndex] = useState(new Date().getMonth());
 
@@ -70,6 +76,7 @@ export default function Calendar({ setBirthday, birthday }) {
     };
 
     const handleDayClick = (day) => {
+        event.preventDefault()
         const selectedDate = new Date(currentYear, currentMonthIndex, day);
         const formattedDate = selectedDate.toLocaleDateString('es-AR', {
             day: '2-digit',
@@ -77,6 +84,7 @@ export default function Calendar({ setBirthday, birthday }) {
             year: 'numeric'
         });
         setBirthday(formattedDate);
+        validateBirthday(formattedDate, setErrors, errors)
         setCalendarModal(false);
     };
 
@@ -84,6 +92,7 @@ export default function Calendar({ setBirthday, birthday }) {
     const monthsEs = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
     const daysEn = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const daysEs = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"];
+
 
     useEffect(() => {
         monthCalendar()
@@ -156,13 +165,13 @@ export default function Calendar({ setBirthday, birthday }) {
                         <div className="flex justify-around pl-4 pr-4">
                             {i18n.language === "en" ? daysEn.map(day => {
                                 return (
-                                    <span className="font-monserrat text-xs w-[36px] text-center">{day}</span>
+                                    <span key={day} className="font-monserrat text-xs w-[36px] text-center">{day}</span>
                                 )
                             })
                                 :
                                 daysEs.map(day => {
                                     return (
-                                        <span className="font-monserrat text-xs w-[36px] text-center">{day}</span>
+                                        <span key={day} className="font-monserrat text-xs w-[36px] text-center">{day}</span>
                                     )
                                 })
                             }
