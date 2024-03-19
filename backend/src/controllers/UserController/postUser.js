@@ -5,52 +5,53 @@ const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = process.env;
 
 const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const postUser = async ({ name, lastname, email, password, image, age, status, quote, aboutMe, facebook, instagram, whatsApp, coreNeeds, frustrations, languages, personality }) => {
+const regexPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/;
+const postUser = async ({ firstName, lastName, email, confirmEmail, password, confirmPassword, birthday, codeNumber, phoneNumber, country, city }) => {
 
-    const newName = name?.trim()
-    const newLastname = lastname?.trim()
-    const newEmail = email?.trim()
+    const newName = firstName?.trim()
+    const newLastname = lastName?.trim()
+    const newEmail = email?.trim()?.toLowerCase();
     const newPassword = password?.trim()
-    const newStatus = status?.trim()
-    const newQuote = quote?.trim()
-    const newFacebook = facebook?.trim()
-    const newInstagram = instagram?.trim()
-    const newWhatsApp = whatsApp?.trim()
-    const newCoreNeeds = coreNeeds?.trim()
-    const newFrustrations = frustrations?.trim()
-    const newAboutMe = aboutMe?.trim()
+    const newPhoneNumber = phoneNumber?.trim()
 
-    if (!(newName.length || newLastname.length || newEmail.length || newPassword.length || image?.length || age?.length || newStatus.length || newAboutMe.length || languages?.length || personality?.length)) throw Error("Required data is missing. Please provide the fields")
+    if (!(newName?.length || newLastname?.length || newEmail?.length || confirmEmail?.length || newPassword?.length || confirmPassword?.length || birthday?.length || codeNumber?.length || newPhoneNumber?.length || country?.length || city?.length)) throw Error("Required data is missing. Please provide the fields")
 
-    if (newPassword.length < 6 || newPassword.length > 14) throw Error('Password must be between 6 and 14 characters in length.');
+    if (newPassword.length < 8 || newPassword.length > 20) throw Error('Password must be between 8 and 20 characters in length.');
+    if (!regexPassword.test(newPassword)) throw Error("errors.passwordInvalid")
+    if(newPassword !== confirmPassword) throw Error("errors.confirmPasswordDiscrepance")
 
     if (!regexEmail.test(newEmail)) throw Error("Invalid email address entered.")
+    if(newEmail !== confirmEmail.toLowerCase()) throw Error("errors.confirmEmailDiscrepance");
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    const selectedPersonalities = await Personality.findAll({
-        where: { id: personality }
-    });
+    // const selectedPersonalities = await Personality.findAll({
+    //     where: { id: personality }
+    // });
 
-    if (selectedPersonalities.length !== personality.length) throw Error('At least one personality does not exist.');
+    // if (selectedPersonalities.length !== personality.length) throw Error('At least one personality does not exist.');
 
     const [newUser, created] = await User.findOrCreate({
         where: {
-            name: newName,
-            lastname: newLastname,
+            firstName: newName,
+            lastName: newLastname,
             email: newEmail,
             password: hashedPassword,
-            image: image,
-            age: age,
-            status: newStatus,
-            quote: newQuote,
-            aboutMe: newAboutMe,
-            facebook: newFacebook,
-            instagram: newInstagram,
-            whatsApp: newWhatsApp,
-            coreNeeds: newCoreNeeds,
-            frustrations: newFrustrations,
-            languages: languages,
+            // image: image,
+            birthday: birthday,
+            codeNumber,
+            phoneNumber: newPhoneNumber,
+            country,
+            city
+            // status: newStatus,
+            // quote: newQuote,
+            // aboutMe: newAboutMe,
+            // facebook: newFacebook,
+            // instagram: newInstagram,
+            // whatsApp: newWhatsApp,
+            // coreNeeds: newCoreNeeds,
+            // frustrations: newFrustrations,
+            // languages: languages,
         }
     })
 
@@ -59,7 +60,7 @@ const postUser = async ({ name, lastname, email, password, image, age, status, q
     const { id } = newUser.dataValues;
 
     if (created) {
-        await newUser.setPersonalities(selectedPersonalities);
+        // await newUser.setPersonalities(selectedPersonalities);
 
         const verifyEmail = await bcrypt.hash(id, 10)
         await User.update({

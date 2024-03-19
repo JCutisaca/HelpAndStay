@@ -3,7 +3,8 @@ import Calendar from '../Calendar/Calendar';
 import { getAllCountries } from '@/apiRequests/Register/getAllCountries';
 import { useTranslation } from 'react-i18next';
 import { getAllStatesByCountryId } from '@/apiRequests/Register/getAllStatesByCountryId';
-import { validateBirthday, validateCodeNumber, validateConfirmEmail, validateConfirmPassword, validateEmail, validateFirstName, validateLastName, validatePassword, validatePhoneNumber, validateCity, validateCountry } from '../Validation/registerValidation';
+import { validateConfirmEmail, validateConfirmPassword, validateEmail, validateFirstName, validateLastName, validatePassword, validatePhoneNumber, validateCity, validateCountry, validateAll } from '../Validation/registerValidation';
+import { postUser } from '@/apiRequests/Register/postUser';
 
 export default function RegisterModal() {
 
@@ -47,42 +48,79 @@ export default function RegisterModal() {
 
     const [selectedCountry, setSelectedCountry] = useState(null);
 
+    const handleBlurFirstName = (value) => {
+        setErrors({ ...errors, firstName: validateFirstName(value) })
+    };
+    const handleBlurLastName = (value) => {
+        setErrors({ ...errors, lastName: validateLastName(value) })
+    };
+    const handleBlurPassword = (value) => {
+        setErrors({ ...errors, password: validatePassword(value) })
+    };
+    const handleBlurConfirmPassword = (value) => {
+        setErrors({ ...errors, confirmPassword: validateConfirmPassword(value, form.password) })
+    };
+    const handleBlurEmail = (value) => {
+        setErrors({ ...errors, email: validateEmail(value) })
+    };
+    const handleBlurConfirmEmail = (value) => {
+        setErrors({ ...errors, confirmEmail: validateConfirmEmail(value, form.email) })
+    };
+    const handleBlurPhoneNumber = (value) => {
+        setErrors({ ...errors, phoneNumber: validatePhoneNumber(form.codeNumber, value) })
+    }
+    const handleBlurCountry = (id) => {
+        setErrors({ ...errors, country: validateCountry(id) })
+    }
+    const handleBlurCity = (value) => {
+        setErrors({ ...errors, city: validateCity(value) })
+    }
+
     const handleChangeInput = (event) => {
-        const value = event.target.value.trim()
+        const value = event.target.value.trim();
         setForm({
             ...form,
             [event.target.name]: value
         })
+        switch (event.target.name) {
+            case "firstName":
+                return handleBlurFirstName(value)
+            case "lastName":
+                return handleBlurLastName(value)
+            case "city":
+                return handleBlurCity(value)
+            case "password":
+                return handleBlurPassword(value)
+            case "confirmPassword":
+                return handleBlurConfirmPassword(value)
+            case "email":
+                return handleBlurEmail(value)
+            case "confirmEmail":
+                return handleBlurConfirmEmail(value)
+            default:
+                break;
+        }
     }
 
     const handleChangeCode = (event) => {
+        const value = event.target.value;
         setForm({
             ...form,
             codeNumber: event.target.value
         })
+        setErrors({ ...errors, phoneNumber: validatePhoneNumber(value, form.phoneNumber) })
     }
 
     const handleChangePhoneNumber = (event) => {
-        const input = event.target.value;
-        if (input.length <= 13) {
+        const value = event.target.value;
+        if (value.length <= 13) {
             setForm({
                 ...form,
-                phoneNumber: input
+                phoneNumber: value
             });
+            handleBlurPhoneNumber(value)
         }
     }
-
-    const handleBlurFirstName = () => { validateFirstName(form, setErrors, errors) };
-    const handleBlurLastName = () => { validateLastName(form, setErrors, errors) };
-    const handleBlurPassword = () => { validatePassword(form, setErrors, errors) };
-    const handleBlurConfirmPassword = () => { validateConfirmPassword(form, setErrors, errors) };
-    const handleBlurEmail = () => { validateEmail(form, setErrors, errors) };
-    const handleBlurConfirmEmail = () => { validateConfirmEmail(form, setErrors, errors) };
-    const handleBlurPhoneNumber = () => { validatePhoneNumber(form, setErrors, errors) }
-    const handleBlurCodeNumber = () => { validateCodeNumber(form, setErrors, errors) }
-    const handleBlurCountry = () => { validateCountry(form, setErrors, errors) }
-    const handleBlurCity = () => { validateCity(form, setErrors, errors) }
-
 
     const handleChangeCountry = (event) => {
         const id = event.target.value;
@@ -91,30 +129,44 @@ export default function RegisterModal() {
             country: id,
             city: ""
         })
-        if(!id) return;
+        handleBlurCountry(id)
+        if (!id) return;
         getAllStatesByCountryId(setStates, id)
     }
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const result = validateAll(form, birthday, setErrors, errors)
+        setErrors(result)
+        const hasErrors = Object.values(result).some(valor => valor !== "");
+
+        if (hasErrors) {
+            return
+        } else {
+            await postUser(form, birthday)
+        }
+    };
 
     const [t, i18n] = useTranslation("global");
 
     useEffect(() => {
         getAllCountries(setCountries, setCodes);
     }, [])
-    console.log(form);
+
     return (
-        <form className="relative mb-[10rem] md:mb-0 md:absolute w-[90%] md:w-fit flex flex-col justify-around rounded-3xl border border-black shadow-2xl min-h-[30rem] top-[5rem] z-[5] left-[50%] transform -translate-x-1/2 rounded-3xl bg-white items-center">
+        <form onSubmit={handleSubmit} className="relative mb-[10rem] md:mb-0 md:absolute w-[90%] md:w-fit flex flex-col justify-around rounded-3xl border border-black shadow-2xl min-h-[30rem] top-[5rem] z-[5] left-[50%] transform -translate-x-1/2 rounded-3xl bg-white items-center">
             <p className="text-xl font-unbounded font-semibold text-left text-black w-[90%] mt-4 md:mt-0">Sign up</p>
             <div className="w-[90%] md:w-[40rem] flex flex-col md:flex-row rounded-3xl bg-white">
                 <div className="w-full h-full md:w-[50%] flex flex-col items-center justify-evenly">
                     <div className="w-[80%] flex flex-col items-left gap-[20px]">
                         <div className='relative'>
                             <label className="font-monserrat text-[#626262] text-sm" htmlFor="Full Name">First Name</label>
-                            <input value={form.firstName} onBlur={handleBlurFirstName} onChange={handleChangeInput} className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type="text" name="firstName" />
+                            <input value={form.firstName} onChange={handleChangeInput} className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type="text" name="firstName" />
                             {errors?.firstName && <p className='text-xs absolute text-[#FF0000]'>{errors.firstName}</p>}
                         </div>
                         <div>
                             <label className="font-monserrat text-[#626262] text-sm" htmlFor="Full Name">Last Name</label>
-                            <input value={form.lastName} onBlur={handleBlurLastName} onChange={handleChangeInput} className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type="text" name="lastName" />
+                            <input value={form.lastName} onChange={handleChangeInput} className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type="text" name="lastName" />
                             {errors?.lastName && <p className='text-xs absolute text-[#FF0000]'>{errors.lastName}</p>}
                         </div>
                         <div className='relative'>
@@ -123,23 +175,23 @@ export default function RegisterModal() {
                             {errors?.birthday && <p className='text-xs absolute text-[#FF0000]'>{errors.birthday}</p>}
                         </div>
                         <div className='hidden md:block'>
-                            <label className="font-monserrat text-[#626262] text-sm" htmlFor="City">City</label>
-                            <select value={form.city} onBlur={handleBlurCity} onChange={handleChangeInput} className="text-sm font-monserrat w-full text-[#626262] border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" name="city">
+                            <label className="font-monserrat text-[#626262] text-sm" htmlFor="Country">Country</label>
+                            <select value={form.country} onChange={handleChangeCountry} className="text-sm font-monserrat w-full text-[#626262] border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" name="country">
                                 <option value="">-Select an option-</option>
-                                {states?.map(state => {
+                                {countries?.map(country => {
                                     return (
-                                        <option key={state} value={state}>
-                                            {state}
+                                        <option className='fon-monserrat' key={country.id} value={country.id}>
+                                            {i18n.language === "en" ? country.nameEn : nameEs}
                                         </option>
                                     )
                                 })}
                             </select>
-                            {errors?.city && <p className='text-xs absolute text-[#FF0000]'>{errors.city}</p>}
+                            {errors?.country && <p className='text-xs absolute text-[#FF0000]'>{errors.country}</p>}
                         </div>
                         <div className='hidden md:block'>
                             <label className="font-monserrat text-[#626262] text-sm" htmlFor="Password">Password</label>
                             <div className='relative'>
-                                <input value={form.password} onBlur={handleBlurPassword} onChange={handleChangeInput} className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type={views.password ? "text" : "password"} name="password"></input>
+                                <input value={form.password} onChange={handleChangeInput} className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type={views.password ? "text" : "password"} name="password"></input>
                                 {errors?.password && <p className='text-xs absolute text-[#FF0000]'>{errors.password}</p>}
                                 <span onClick={() => setViews({ ...views, password: !views.password })} className='absolute top-[0.5rem] right-[0.5rem] cursor-pointer'>
                                     {!views.password ?
@@ -152,23 +204,23 @@ export default function RegisterModal() {
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col w-full md:w-[50%]">
+                <div className="mt-[20px] mb-[20px] md:mt-0 md:mb-0 flex flex-col w-full md:w-[50%]">
                     <div className="flex justify-center w-full">
                         <div className="w-[80%] flex flex-col items-left  gap-[20px]">
                             <div>
                                 <label className="font-monserrat text-[#626262] text-sm" htmlFor="Email address">Email address</label>
-                                <input value={form.email} onBlur={handleBlurEmail} onChange={handleChangeInput} className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type="text" name="email" />
+                                <input value={form.email} onChange={handleChangeInput} className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type="text" name="email" />
                                 {errors?.email && <p className='text-xs absolute text-[#FF0000]'>{errors.email}</p>}
                             </div>
                             <div>
                                 <label className="font-monserrat text-[#626262] text-sm" htmlFor="Email address">Confirm Email</label>
-                                <input value={form.confirmEmail} onBlur={handleBlurConfirmEmail} onChange={handleChangeInput} className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type="text" name="confirmEmail" />
+                                <input value={form.confirmEmail} onChange={handleChangeInput} className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type="text" name="confirmEmail" />
                                 {errors?.confirmEmail && <p className='text-xs absolute text-[#FF0000]'>{errors.confirmEmail}</p>}
                             </div>
                             <div>
                                 <label className="font-monserrat text-[#626262] text-sm" htmlFor="Phone number">Phone number</label>
                                 <div className="flex flex-row justify-between">
-                                    <select onBlur={handleBlurCodeNumber} onChange={handleChangeCode} value={form.codeNumber} className="text-sm font-monserrat text-[#626262] border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1 w-[32%]" name="">
+                                    <select onChange={handleChangeCode} value={form.codeNumber} className="text-sm font-monserrat text-[#626262] border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1 w-[32%]" name="">
                                         <option value="">--</option>
                                         {codes?.map(code => {
                                             return (
@@ -178,13 +230,13 @@ export default function RegisterModal() {
                                             )
                                         })}
                                     </select>
-                                    <input onBlur={handleBlurPhoneNumber} value={form.phoneNumber} onChange={handleChangePhoneNumber} className="appearance-none text-sm font-monserrat w-[65%] text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" name='phone' type="number" />
+                                    <input value={form.phoneNumber} onChange={handleChangePhoneNumber} className="appearance-none text-sm font-monserrat w-[65%] text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" name='phone' type="number" />
                                 </div>
                                 {(errors?.codeNumber || errors?.phoneNumber) && <p className='text-xs absolute text-[#FF0000]'>{errors?.codeNumber || errors?.phoneNumber}</p>}
                             </div>
-                            <div>
+                            <div className='md:hidden'>
                                 <label className="font-monserrat text-[#626262] text-sm" htmlFor="Country">Country</label>
-                                <select onBlur={handleBlurCountry} value={form.country} onChange={handleChangeCountry} className="text-sm font-monserrat w-full text-[#626262] border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" name="country">
+                                <select value={form.country} onChange={handleChangeCountry} className="text-sm font-monserrat w-full text-[#626262] border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" name="country">
                                     <option value="">-Select an option-</option>
                                     {countries?.map(country => {
                                         return (
@@ -196,9 +248,9 @@ export default function RegisterModal() {
                                 </select>
                                 {errors?.country && <p className='text-xs absolute text-[#FF0000]'>{errors.country}</p>}
                             </div>
-                            <div className='md:hidden'>
+                            <div>
                                 <label className="font-monserrat text-[#626262] text-sm" htmlFor="City">City</label>
-                                <select value={form.city} onBlur={handleBlurCity} onChange={handleChangeInput} className="text-sm font-monserrat w-full text-[#626262] border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" name="city">
+                                <select value={form.city} onChange={handleChangeInput} className="text-sm font-monserrat w-full text-[#626262] border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" name="city">
                                     <option value="">-Select an option-</option>
                                     {states?.map(state => {
                                         return (
@@ -213,7 +265,7 @@ export default function RegisterModal() {
                             <div className='md:hidden'>
                                 <label className="font-monserrat text-[#626262] text-sm" htmlFor="Password">Password</label>
                                 <div className='relative'>
-                                    <input value={form.password} onBlur={validatePassword} onChange={handleChangeInput} className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type={views.password ? "text" : "password"} name="password"></input>
+                                    <input value={form.password} onChange={handleChangeInput} className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type={views.password ? "text" : "password"} name="password"></input>
                                     {errors?.password && <p className='text-xs absolute text-[#FF0000]'>{errors.password}</p>}
                                     <span onClick={() => setViews({ ...views, password: !views.password })} className='absolute top-[0.5rem] right-[0.5rem] cursor-pointer'>
                                         {!views.password ?
@@ -227,7 +279,7 @@ export default function RegisterModal() {
                             <div>
                                 <label className="font-monserrat text-[#626262] text-sm" htmlFor="Confirm password">Confirm password</label>
                                 <div className='relative'>
-                                    <input value={form.confirmPassword} onBlur={handleBlurConfirmPassword} onChange={handleChangeInput} className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type={views.confirmPassword ? "text" : "password"} name="confirmPassword"></input>
+                                    <input value={form.confirmPassword} onChange={handleChangeInput} className="text-sm font-monserrat w-full text-black border-[#D9D9D9] border-solid border-[3px] rounded-xl p-1" type={views.confirmPassword ? "text" : "password"} name="confirmPassword"></input>
                                     {errors?.confirmPassword && <p className='text-xs absolute text-[#FF0000]'>{errors.confirmPassword}</p>}
                                     <span onClick={() => setViews({ ...views, confirmPassword: !views.confirmPassword })} className='absolute top-[0.5rem] right-[0.5rem] cursor-pointer'>
                                         {!views.confirmPassword ?
@@ -242,7 +294,7 @@ export default function RegisterModal() {
                     </div>
                 </div>
             </div>
-            <button className="text-sm font-monserrat font-semibold w-[90%] text-white text-nowrap bg-[#5196A6] rounded-xl hover:bg-[#F3A342] hover:text-white hover:border-none transition-all duration-500 m-4 p-2">Sign up</button>
+            <button className="text-sm font-monserrat font-semibold w-[90%] text-white text-nowrap bg-[#5196A6] rounded-xl hover:bg-[#F3A342] hover:text-white hover:border-none transition-all duration-500 m-4 p-2" type='submit'>Sign up</button>
         </form>
     )
 }

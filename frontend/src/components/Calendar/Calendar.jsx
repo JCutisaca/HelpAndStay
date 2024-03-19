@@ -11,12 +11,7 @@ export default function Calendar({ setBirthday, birthday, errors, setErrors }) {
     const closeModal = (event) => {
         if (event.target.id === "modalCalendar") {
             setCalendarModal(false);
-        }
-        if(!birthday?.length) {
-            setErrors({
-                ...errors,
-                birthday: "error"
-            })
+            setErrors({...errors, birthday: validateBirthday(birthday)})
         }
     }
     const [currentMonth, setCurrentMonth] = useState();
@@ -84,7 +79,7 @@ export default function Calendar({ setBirthday, birthday, errors, setErrors }) {
             year: 'numeric'
         });
         setBirthday(formattedDate);
-        validateBirthday(formattedDate, setErrors, errors)
+        setErrors({...errors, birthday: validateBirthday(formattedDate)})
         setCalendarModal(false);
     };
 
@@ -97,7 +92,7 @@ export default function Calendar({ setBirthday, birthday, errors, setErrors }) {
     useEffect(() => {
         monthCalendar()
     }, [])
-
+    
     useEffect(() => {
         if (yearModalRef.current && yearsArray.includes(currentYear)) {
             const selectedYearIndex = yearsArray.indexOf(currentYear);

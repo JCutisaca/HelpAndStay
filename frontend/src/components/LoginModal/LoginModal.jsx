@@ -9,9 +9,9 @@ export default function LoginModal() {
 
     const handleSignInGoogle = async () => await signIn("google", { redirect: false });
     const handleSignInFacebook = async () => await signIn("facebook", { redirect: false });
-    const {data} = useSession()
+    const { data } = useSession()
     console.log(data);
-    
+
 
     return (
         <div className="absolute flex flex-col md:flex-row rounded-3xl border border-black shadow-2xl w-[90%] md:w-[40rem] h-[40rem] top-[5rem] z-[5] left-[50%] transform -translate-x-1/2">

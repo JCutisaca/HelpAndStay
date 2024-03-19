@@ -1,211 +1,116 @@
 const regexCharacters = /^[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ, ]+$/;
 const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const regexPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/;
 
 
-export const validateFirstName = (form, setErrors, errors) => {
-    const firstName = form.firstName.trim();
-    if (!firstName.length) {
-        setErrors({
-            ...errors,
-            firstName: "errors.firstNameEmpty"
-        })
-        return;
+export const validateFirstName = (firstName) => {
+    const trimmedFirstName = firstName?.trim();
+    if (!trimmedFirstName.length) {
+        return "errors.firstNameEmpty"
     }
-    if (firstName.length < 2) {
-        setErrors({
-            ...errors,
-            firstName: "errors.firstNameShort"
-        })
-        return;
+    if (trimmedFirstName.length < 2) {
+        return "errors.firstNameShort"
     }
-    if (firstName.length > 15) {
-        setErrors({
-            ...errors,
-            firstName: "errors.firstNameLong"
-        })
-        return;
+    if (trimmedFirstName.length > 15) {
+        return "errors.firstNameLong"
     }
-    if (!regexCharacters.test(firstName)) {
-        setErrors({
-            ...errors,
-            firstName: "errors.firstNameInvalid"
-        })
-        return;
+    if (!regexCharacters.test(trimmedFirstName)) {
+        return "errors.firstNameInvalid"
     } else {
-        setErrors({
-            ...errors,
-            firstName: ""
-        })
+        return ""
     }
 }
 
-export const validateLastName = (form, setErrors, errors) => {
-    const lastName = form.lastName.trim();
-    if (!lastName.length) {
-        setErrors({
-            ...errors,
-            lastName: "errors.lastNameEmpty"
-        })
-        return;
+export const validateLastName = (lastName) => {
+    const trimmedLastName = lastName?.trim();
+    if (!trimmedLastName.length) {
+        return "errors.lastNameEmpty"
     }
-    if (lastName.length < 2) {
-        setErrors({
-            ...errors,
-            lastName: "errors.lastNameShort"
-        })
-        return;
+    if (trimmedLastName.length < 2) {
+        return "errors.lastNameShort"
     }
-    if (lastName.length > 15) {
-        setErrors({
-            ...errors,
-            lastName: "errors.lastNameLong"
-        })
-        return;
+    if (trimmedLastName.length > 15) {
+        return "errors.lastNameLong"
     }
-    if (!regexCharacters.test(lastName)) {
-        setErrors({
-            ...errors,
-            lastName: "errors.lastNameInvalid"
-        })
-        return;
+    if (!regexCharacters.test(trimmedLastName)) {
+        return "errors.lastNameInvalid"
     } else {
-        setErrors({
-            ...errors,
-            lastName: ""
-        })
+        return ""
     }
 }
 
-export const validateEmail = (form, setErrors, errors) => {
-    const email = form.email.trim();
-    if (!email.length) {
-        setErrors({
-            ...errors,
-            email: "errors.emailEmpty"
-        })
-        return;
+export const validateEmail = (email) => {
+    const trimmedEmail = email?.trim();
+    if (!trimmedEmail?.length) {
+        return "errors.emailEmpty"
     }
-    if (!regexEmail.test(email)) {
-        setErrors({
-            ...errors,
-            email: "errors.emailInvalid"
-        })
-        return;
+    if (!regexEmail.test(trimmedEmail)) {
+        return "errors.emailInvalid"
     } else {
-        setErrors({
-            ...errors,
-            email: ""
-        })
+        return ""
     }
 }
 
-export const validateConfirmEmail = (form, setErrors, errors) => {
-    const confirmEmail = form.confirmEmail.trim();
-    if (!confirmEmail.length) {
-        setErrors({
-            ...errors,
-            confirmEmail: "errors.confirmEmailEmpty"
-        })
-        return;
+export const validateConfirmEmail = (confirmEmail, email) => {
+    const trimmedConfirmEmail = confirmEmail?.trim();
+    if (!trimmedConfirmEmail.length) {
+        return "errors.confirmEmailEmpty"
     }
-    if (!regexEmail.test(confirmEmail)) {
-        setErrors({
-            ...errors,
-            confirmEmail: "errors.confirmEmailInvalid"
-        })
-        return;
+    if (!regexEmail.test(trimmedConfirmEmail)) {
+        return "errors.confirmEmailInvalid"
     }
-    if (form.email !== confirmEmail) {
-        setErrors({
-            ...errors,
-            confirmEmail: "errors.confirmEmailDiscrepance"
-        })
-        return;
+    if (email !== trimmedConfirmEmail) {
+        return "errors.confirmEmailDiscrepance"
     } else {
-        setErrors({
-            ...errors,
-            confirmEmail: ""
-        })
+        return ""
     }
 }
 
-export const validatePassword = (form, setErrors, errors) => {
-    const password = form.password.trim();
-    if (!password.length) {
-        setErrors({
-            ...errors,
-            password: "errors.passwordEmpty"
-        })
-        return;
+export const validatePassword = (password) => {
+    const trimmedPassword = password?.trim();
+    if (!trimmedPassword.length) {
+        return "errors.passwordEmpty"
     }
-    if (password.length < 8) {
-        setErrors({
-            ...errors,
-            password: "errors.passwordShort"
-        })
-        return;
+    if (trimmedPassword.length < 8) {
+        return "errors.passwordShort"
     }
-    if (password.length > 20) {
-        setErrors({
-            ...errors,
-            password: "errors.passwordLong"
-        })
-        return;
+    if(!regexPassword.test(trimmedPassword)) {
+        return "errors.passwordInvalid"
+    }
+    if (trimmedPassword.length > 20) {
+        return "errors.passwordLong"
     } else {
-        setErrors({
-            ...errors,
-            password: ""
-        })
+        return ""
     }
 }
 
-export const validateConfirmPassword = (form, setErrors, errors) => {
-    const confirmPassword = form.confirmPassword.trim();
-    if (!confirmPassword.length) {
-        setErrors({
-            ...errors,
-            confirmPassword: "errors.confirmPasswordEmpty"
-        })
-        return;
+export const validateConfirmPassword = (confirmPassword, password) => {
+    const trimmedConfirmPassword = confirmPassword?.trim();
+    if (!trimmedConfirmPassword.length) {
+        return "errors.confirmPasswordEmpty"
     }
-    if (confirmPassword.length < 8) {
-        setErrors({
-            ...errors,
-            confirmPassword: "errors.confirmPasswordShort"
-        })
-        return;
+    if (trimmedConfirmPassword.length < 8) {
+        return "errors.confirmPasswordShort"
     }
-    if (confirmPassword.length > 20) {
-        setErrors({
-            ...errors,
-            confirmPassword: "errors.confirmPasswordLong"
-        })
-        return;
+    if (trimmedConfirmPassword.length > 20) {
+        return "errors.confirmPasswordLong"
     }
-    if (confirmPassword.length < 8) {
-        setErrors({
-            ...errors,
-            confirmPassword: "errors.confirmPasswordShort"
-        })
-        return;
+    if (trimmedConfirmPassword.length < 8) {
+        return "errors.confirmPasswordShort"
     }
-    if (form.password !== confirmPassword) {
-        setErrors({
-            ...errors,
-            confirmPassword: "errors.confirmPasswordDiscrepance"
-        })
-        return;
+    if (password !== trimmedConfirmPassword) {
+        return "errors.confirmPasswordDiscrepance"
     }
     else {
-        setErrors({
-            ...errors,
-            confirmPassword: ""
-        })
+        return ""
     }
 }
 
-export const validateBirthday = (formattedDate, setErrors, errors) => {
-    const [day, month, year] = formattedDate?.split('/').map(Number);
+export const validateBirthday = (birthday) => {
+    if (!birthday?.length) {
+        return "errors.birthdayEmpty"
+    }
+    const [day, month, year] = birthday?.split('/').map(Number);
     const birthdayDate = new Date(year, month - 1, day, 12, 0, 0, 0);
     const currentDate = new Date();
 
@@ -214,106 +119,68 @@ export const validateBirthday = (formattedDate, setErrors, errors) => {
     if (birthdayDate.getMonth() > currentDate.getMonth() || (birthdayDate.getMonth() === currentDate.getMonth() && birthdayDate.getDate() > currentDate.getDate())) {
         yearOld--;
     }
-    if (!formattedDate?.length) {
-        setErrors({
-            ...errors,
-            birthday: "errors.birthdayEmpty"
-        })
-        return;
-    }
     if (yearOld < 18) {
-        setErrors({
-            ...errors,
-            birthday: "errors.birthdayAge"
-        })
-        return;
+        return "errors.birthdayAge"
     } else {
-        setErrors({
-            ...errors,
-            birthday: ""
-        })
+        return ""
     }
 }
 
-export const validatePhoneNumber = (form, setErrors, errors) => {
-    const code = form?.codeNumber;
-    const phoneNumber = form?.phoneNumber?.trim();
-    console.log(!code.length);
-    if (!code.length) {
-        setErrors({
-            ...errors,
-            phoneNumber: "errors.codeNumberEmpty"
-        })
-        return
+export const validatePhoneNumber = (codeNumber, phoneNumber) => {
+    const trimmedPhoneNumber = phoneNumber?.trim();
+    if (!codeNumber?.length) {
+        return "errors.codeNumberEmpty"
     }
-    if (!phoneNumber.length) {
-        setErrors({
-            ...errors,
-            phoneNumber: "errors.phoneNumberEmpty"
-        })
-        return
+    if (!trimmedPhoneNumber?.length) {
+        return "errors.phoneNumberEmpty"
     }
-    if (phoneNumber.length < 6) {
-        setErrors({
-            ...errors,
-            phoneNumber: "errors.phoneNumberShort"
-        })
-        return
+    if (trimmedPhoneNumber?.length < 6) {
+        return "errors.phoneNumberShort"
     } else {
-        setErrors({
-            ...errors,
-            phoneNumber: ""
-        })
+        return ""
     }
 }
 
-export const validateCodeNumber = (form, setErrors, errors) => {
-    const code = form.codeNumber;
-    if (!code) {
-        setErrors({
-            ...errors,
-            codeNumber: "errors.codeNumberEmpty"
-        })
-        return
+export const validateCountry = (country) => {
+    const trimmedCountry = country?.trim();
+    if (!trimmedCountry?.length) {
+        return "errors.countryEmpty"
     } else {
-        setErrors({
-            ...errors,
-            codeNumber: ""
-        })
-    }
-    if (errors?.phoneNumber) {
-        validatePhoneNumber(form, setErrors, errors)
+        return ""
     }
 }
 
-export const validateCountry = (form, setErrors, errors) => {
-    const country = form?.country?.trim();
-    if (!country?.length) {
-        setErrors({
-            ...errors,
-            country: "errors.countryEmpty"
-        })
-        return
+export const validateCity = (city) => {
+    const trimmedCity = city;
+    if (!trimmedCity?.length) {
+        return "errors.cityEmpty"
     } else {
-        setErrors({
-            ...errors,
-            country: ""
-        })
+        return ""
     }
 }
 
-export const validateCity = (form, setErrors, errors) => {
-    const city = form?.city?.trim();
-    if (!city?.length) {
-        setErrors({
-            ...errors,
-            city: "errors.cityEmpty"
-        })
-        return
-    } else {
-        setErrors({
-            ...errors,
-            city: ""
-        })
+export const validateAll = (form, birthday) => {
+    const firstName = validateFirstName(form.firstName)
+    const lastName = validateLastName(form.lastName)
+    const email = validateEmail(form.email)
+    const confirmEmail = validateConfirmEmail(form.confirmEmail, form.email)
+    const password = validatePassword(form.password)
+    const confirmPassword = validateConfirmPassword(form.confirmPassword, form.password)
+    const phoneNumber = validatePhoneNumber(form.codeNumber, form.phoneNumber)
+    const country = validateCountry(form.country)
+    const city = validateCity(form.city)
+    const dateBirthday = validateBirthday(birthday)
+    const error = {
+        firstName,
+        lastName,
+        email,
+        confirmEmail,
+        password,
+        confirmPassword,
+        phoneNumber,
+        country,
+        city,
+        birthday: dateBirthday
     }
+    return error
 }

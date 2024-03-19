@@ -7,43 +7,59 @@ module.exports = (sequelize) => {
             primaryKey: true,
             defaultValue: DataTypes.UUIDV4
         },
-        name: {
+        firstName: {
             type: DataTypes.STRING,
-            allownull: false,
+            allowNull: false,
         },
-        lastname: {
+        lastName: {
             type: DataTypes.STRING,
-            allownull: false,
+            allowNull: false,
         },
         email: {
             type: DataTypes.STRING,
-            allownull: false,
+            allowNull: false,
             unique: true
         },
         emailVerified: {
             type: DataTypes.BOOLEAN,
-            allownull: false,
+            allowNull: false,
             defaultValue: false
         },
         emailCode: {
             type: DataTypes.STRING,
-            allownull: true
+            allowNull: true
         },
         password: {
             type: DataTypes.STRING,
-            allownull: false
+            allowNull: false
         },
         recoveryCode: {
             type: DataTypes.STRING,
-            allownull: true
+            allowNull: true
         },
         image: {
             type: DataTypes.STRING,
-            allownull: true
+            allowNull: true
         },
-        age: {
-            type: DataTypes.INTEGER,
-            allownull: true
+        birthday: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        codeNumber: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        phoneNumber: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        country: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        city: {
+            type: DataTypes.STRING,
+            allowNull: false
         },
         status: {
             type: DataTypes.ENUM(
@@ -56,39 +72,39 @@ module.exports = (sequelize) => {
                 'Open relationship',
                 'Separated'
             ),
-            allownull: false
+            allowNull: true
         },
         quote: {
             type: DataTypes.STRING,
-            allownull: true
+            allowNull: true
         },
         aboutMe: {
             type: DataTypes.STRING,
-            allownull: false
+            allowNull: true
         },
         facebook: {
             type: DataTypes.STRING,
-            allownull: true
+            allowNull: true
         },
         instagram: {
             type: DataTypes.STRING,
-            allownull: true
+            allowNull: true
         },
         whatsApp: {
             type: DataTypes.STRING,
-            allownull: true
+            allowNull: true
         },
         coreNeeds: {
             type: DataTypes.TEXT,
-            allownull: true
+            allowNull: true
         },
         frustrations: {
             type: DataTypes.TEXT,
-            allownull: true
+            allowNull: true
         },
         languages: {
             type: DataTypes.ARRAY(DataTypes.STRING),
-            allownull: false
+            allowNull: true
         }
     }, {
         timestamps: true
