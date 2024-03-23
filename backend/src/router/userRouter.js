@@ -1,11 +1,13 @@
 const { Router } = require('express');
 const { postUserHandler, getAllUsersHandler, verifyEmailHandler, getUserByIdHandler, getAllFavoritesByUserIdHandler,
     sendFriendRequestHandler, acceptFriendRequestHandler, removeFriendHandler, rejectFriendRequestHandler,
-    getMyfriendsHandler } = require('../handlers/userHandler');
+    getMyfriendsHandler, 
+    userLoginGoogleHandler} = require('../handlers/userHandler');
 const userRouter = Router();
 
 
 userRouter.post("/create", postUserHandler)
+userRouter.post("/loginGoogle", userLoginGoogleHandler)
 userRouter.get("/allUsers", getAllUsersHandler)
 
 userRouter.post("/addFriend", sendFriendRequestHandler)

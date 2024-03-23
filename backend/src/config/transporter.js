@@ -14,6 +14,6 @@ const transporter = nodemailer.createTransport({
 
 transporter.verify()
     .then(() => console.log("Email sent successfully via Gmail"))
-    .catch((error) => console.error(error))
+    .catch((error) => console.error({error: error}))
 
 module.exports = transporter;

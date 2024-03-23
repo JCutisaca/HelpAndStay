@@ -31,7 +31,7 @@ module.exports = (sequelize) => {
         },
         password: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         recoveryCode: {
             type: DataTypes.STRING,
@@ -47,19 +47,19 @@ module.exports = (sequelize) => {
         },
         codeNumber: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         phoneNumber: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         country: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         city: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         status: {
             type: DataTypes.ENUM(
@@ -105,6 +105,10 @@ module.exports = (sequelize) => {
         languages: {
             type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull: true
+        },
+        provider: {
+            type: DataTypes.ENUM("Google", "Facebook", "System"),
+            allowNull: false
         }
     }, {
         timestamps: true

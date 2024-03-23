@@ -8,11 +8,21 @@ const acceptFriendRequest = require("../controllers/UserController/acceptFriendR
 const rejectFriendRequest = require("../controllers/UserController/rejectFriendRequest")
 const removeFriend = require("../controllers/UserController/removeFriend")
 const getMyfriends = require("../controllers/UserController/getMyFriends")
+const userLoginGoogle = require("../controllers/UserController/userLoginGoogle")
 
 
 const postUserHandler = async (req, res) => {
     try {
         const response = await postUser(req.body)
+        res.status(201).json(response)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
+const userLoginGoogleHandler = async (req, res) => {
+    try {
+        const response = await userLoginGoogle(req.body)
         res.status(201).json(response)
     } catch (error) {
         res.status(400).json({error: error.message})
@@ -110,5 +120,6 @@ module.exports = {
     acceptFriendRequestHandler,
     rejectFriendRequestHandler,
     removeFriendHandler,
-    getMyfriendsHandler
+    getMyfriendsHandler,
+    userLoginGoogleHandler
 }

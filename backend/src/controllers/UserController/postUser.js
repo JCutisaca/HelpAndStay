@@ -72,7 +72,7 @@ const postUser = async ({ firstName, lastName, email, confirmEmail, password, co
     }
 
     const token = jwt.sign({ id }, JWT_SECRET)
-    return ({ user: id, token });
+    return ({ user: newUser.dataValues, token });
 }
 
 module.exports = postUser;

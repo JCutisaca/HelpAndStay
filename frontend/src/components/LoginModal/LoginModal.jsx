@@ -3,6 +3,7 @@ import LockIcon from "../utils/LockIcon";
 import Image from "next/image";
 import login from '@/assets/images/login.jpg'
 import { signIn, useSession } from 'next-auth/react'
+import GoogleAuth from "../ButtonsAuth/GoogleAuth";
 
 
 export default function LoginModal() {
@@ -18,6 +19,7 @@ export default function LoginModal() {
             <div className="w-full h-full md:w-[50%] flex flex-col items-center justify-evenly bg-white rounded-3xl md:rounded-e-[0] md:rounded-s-3xl">
                 <p className="text-xl font-monserrat font-semibold text-center text-black w-[80%]">Sign in with the following services:</p>
                 <div className="w-[80%] flex flex-col items-center gap-4">
+                    {/* <GoogleAuth></GoogleAuth> */}
                     <button onClick={() => handleSignInGoogle()} className="flex items-center justify-center md:justify-start gap-4 text-nowrap text-base font-monserrat font-semibold w-full text-black border-[#242424] border-solid border-2 rounded-xl pl-4">
                         <svg
                             aria-hidden="true"
