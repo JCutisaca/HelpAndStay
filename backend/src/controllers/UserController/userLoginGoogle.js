@@ -8,13 +8,14 @@ const userLoginGoogle = async ({ accessToken, user }) => {
     if (!accessToken) throw Error('Token is required.')
     const birthday = "03/11/1998"
     const { data } = await axios(`${URL_GOOGLE_TOKEN}${accessToken}`)
-    if (data.aud !== GOOGLE_CLIENT_ID) throw Error('Invalid client ID. Please provide a valid client ID.')
+    console.log(data);
+    if (data?.aud !== GOOGLE_CLIENT_ID) throw Error('Invalid client ID. Please provide a valid client ID.')
     const newEmail = user?.email.toLowerCase()
     const findUser = await User.findOne({ where: { email: newEmail } })
     if (!findUser) {
         const newUser = await User.create({
             firstName: user.firstName,
-            lastName: user.lastName,
+            lastName: user?.lastName ? user.lastName : null,
             email: newEmail,
             image: user.image ? user.image : null,
             birthday: birthday,
@@ -36,7 +37,7 @@ const userLoginGoogle = async ({ accessToken, user }) => {
     }
     const { id, email } = findUser.dataValues;
     const token = jwt.sign({ id, email }, JWT_SECRET)
-    return ({ user: findUser.dataValues, token });
+    return ({ ...findUser.dataValues, token });
 }
 
 module.exports = userLoginGoogle;

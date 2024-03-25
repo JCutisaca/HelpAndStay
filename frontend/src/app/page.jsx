@@ -10,8 +10,12 @@ import lanterns from '@/assets/images/lanterns.webp'
 import { useTranslation } from "react-i18next";
 import About from "@/components/About/About";
 import LoginModal from "@/components/LoginModal/LoginModal";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import RegisterModal from "@/components/RegisterModal/RegisterModal";
+import { useSession } from "next-auth/react";
+import { UserContext } from "@/components/Providers/UserProvider/UserProvider";
+import axios from "axios";
+import { userLoginGoogle } from "@/apiRequests/Register/userLoginGoogle";
 
 
 
@@ -19,6 +23,8 @@ export default function Home() {
   const [t, i18n] = useTranslation("global");
   const [loginModal, setLoginModal] = useState(false);
   const [registerModal, setRegisterModal] = useState(false);
+  const { data: session } = useSession();
+  const [previousSession, setPreviousSession] = useState(null);
   const closeModal = (event) => {
     if (event.target.id === "modal") {
       setLoginModal(false);
@@ -27,24 +33,32 @@ export default function Home() {
       setRegisterModal(false);
     }
   }
+  const { user, setUser } = useContext(UserContext);
+  console.log(user);
+  useEffect(() => {
+    if (session?.user?.email && !user?.email && session !== previousSession) {
+      console.log("me ejecute");
+      userLoginGoogle(session, setUser)
+      setPreviousSession(session);
+    }
+  }, [session])
 
   return (
     <div className="w-full">
-      <div className="grid grid-cols-2 grid-rows-12 md:grid-cols-7 md:grid-rows-9 gap-4 w-full h-full max-h-[90vh]">
-        <div className="flex items-center gap-4 w-full h-full justify-between col-span-2 md:hidden">
-          <button onClick={() => setLoginModal(true)} className="flex items-center justify-center w-[inherit] h-[65%] text-xl font-monserrat font-semibold w-40 text-[#5196A6] border border-solid border-4 rounded-xl">Sign in</button>
-          {loginModal &&
-            <div onClick={closeModal} id="modal" className="overflow-y-auto inset-0 fixed top-0 left-0 w-full h-full z-[3] bg-[#000000b3]">
-              <LoginModal />
-            </div>
-          }
-          <button onClick={() => setRegisterModal(true)} className="flex items-center justify-center w-[inherit] h-[65%] text-xl font-monserrat font-semibold w-40 text-white text-nowrap bg-[#5196A6] rounded-xl">Sign up</button>
-          {registerModal &&
-            <div onClick={closeModal} id="registerModal" className="block overflow-y-auto fixed top-0 left-0 w-full h-full z-[3] bg-[#000000b3]">
-              <RegisterModal />
-            </div>
-          }
-        </div>
+      {!user?.email ? <div className="grid grid-cols-2 grid-rows-12 md:grid-cols-7 md:grid-rows-9 gap-4 w-full h-full max-h-[90vh]"><div className="flex items-center gap-4 w-full h-full justify-between col-span-2 md:hidden">
+        <button onClick={() => setLoginModal(true)} className="flex items-center justify-center w-[inherit] h-[65%] text-xl font-monserrat font-semibold w-40 text-[#5196A6] border border-solid border-4 rounded-xl">Sign in</button>
+        {loginModal &&
+          <div onClick={closeModal} id="modal" className="overflow-y-auto inset-0 fixed top-0 left-0 w-full h-full z-[3] bg-[#000000b3]">
+            <LoginModal />
+          </div>
+        }
+        <button onClick={() => setRegisterModal(true)} className="flex items-center justify-center w-[inherit] h-[65%] text-xl font-monserrat font-semibold w-40 text-white text-nowrap bg-[#5196A6] rounded-xl">Sign up</button>
+        {registerModal &&
+          <div onClick={closeModal} id="registerModal" className="block overflow-y-auto fixed top-0 left-0 w-full h-full z-[3] bg-[#000000b3]">
+            <RegisterModal />
+          </div>
+        }
+      </div>
         <div className="flex col-span-2 row-span-2 md:col-start-2 md:col-end-5 md:row-start-2 md:row-end-5">
           <Image className="object-cover w-full" alt="telephone" src={telephone}></Image>
         </div>
@@ -74,9 +88,8 @@ export default function Home() {
         <div className="invisible md:visible md:col-start-7 md:col-end-7 md:row-start-5 md:row-end-7">
           <Image className="object-cover w-full" alt="lanterns China" src={lanterns}></Image>
         </div>
-      </div>
+      </div> : ""}
       <About />
-
     </div>
   );
 }

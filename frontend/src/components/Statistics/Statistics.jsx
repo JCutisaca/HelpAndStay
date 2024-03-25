@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function Statistics() {
     return (
         <>
-            <div className="mt-4 w-[99.5vw] flex justify-center h-[40rem] md:h-[50rem] relative">
+            <div className="mt-4 w-[98vw] flex justify-center h-[40rem] md:h-[50rem] relative">
                 <div className="absolute w-[80%] top-[80%] md:w-fit md:top-[20%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 border border-solid border-[3px] border-white p-4">
                     <h4 className="font-monserrat font-semibold text-white text-base md:text-5xl">The one who lives sees a lot.</h4>
                     <h4 className="font-monserrat font-semibold text-white text-base md:text-5xl">Those who travel see more</h4>

@@ -2,8 +2,6 @@ import NextAuth from 'next-auth'
 import FacebookProvider from 'next-auth/providers/facebook'
 import GoogleProvider from 'next-auth/providers/google'
 import EmailProvider from 'next-auth/providers/email'
-import { postUser } from '@/apiRequests/Register/postUser'
-import axios from 'axios'
 
 const handler = NextAuth({
   providers: [
@@ -14,13 +12,13 @@ const handler = NextAuth({
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
-      scope: 'profile email',
+      scope: "email profile openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
       profile: (profile) => {
         return {
           id: profile?.sub,
           email: profile?.email,
           firstName: profile?.given_name,
-          lastName: profile?.family_name,
+          lastName: profile?.family_name || "",
           image: profile?.picture,
           provider: "google"
         }
@@ -46,14 +44,8 @@ const handler = NextAuth({
       return token;
     },
     async session({ session, token }) {
-      session.accessToken = token.accessToken;
       if (token.provider === 'google') {
-        try {
-          const { data } = await axios.post("http://localhost:3001/user/loginGoogle", { accessToken: session.accessToken, user: { email: token.email, firstName: token.firstName, lastName: token.lastName, image: token.image } })
-          return data;
-        } catch (error) {
-          console.log(error);
-        }
+        return {...session, accessToken: token.accessToken, user: { email: token.email, firstName: token.firstName, lastName: token.lastName, image: token.image, provider: token.provider } };
       }
       return { ...session, user: { email: token.email, firstName: token.firstName, lastName: token.lastName, image: token.image, provider: token.provider } };
     },
