@@ -3,30 +3,40 @@ import userProfile from '@/assets/svg/userProfile.svg'
 import message from '@/assets/svg/message.svg'
 import settings from '@/assets/svg/settings.svg'
 import logOut from '@/assets/svg/logOut.svg'
+import { signOut } from 'next-auth/react'
+import { useContext } from "react"
+import { UserContext } from "@/components/Providers/UserProvider/UserProvider"
 
 
 export default function UserDropDown() {
+    const id = "userDropDownMenu";
+    const { user, setUser } = useContext(UserContext);
+    const handleSignOut = () => {
+        signOut({ redirect: false })
+        setUser()
+    }
+
     return (
-        <div className='absolute bg-white flex flex-col top-20 right-20 z-[5] gap-4 p-2 rounded-xl shadow-custom'>
-                <button className="flex gap-2 items-center">
-                    <Image className="w-5" src={userProfile}></Image>
-                    <p className="font-monserrat text-base text-black font-semibold text-left">Profile</p>
-                </button>
-                <button className="flex gap-2 items-center">
-                    <Image className="w-5" src={message}></Image>
-                    <p className="font-monserrat text-base text-black font-semibold text-left">Messages</p>
-                </button>
-                <button className="flex gap-2 items-center">
-                    <Image className="w-5" src={settings}></Image>
-                    <p className="font-monserrat text-base text-black font-semibold text-left">Settings</p>
-                </button>
-                <button className="flex gap-2 items-center">
-                    <Image className="w-5" src={logOut}></Image>
-                    <p className="font-monserrat text-base text-black font-semibold text-left">Log Out</p>
-                </button>
-                <div className="absolute top-[-16px] right-10 w-0 h-0">
-                    <div className="w-0 h-0 border-solid border-transparent border-[8px] border-b-white"></div>
-                </div>
+        <div id={id} className='absolute bg-white flex flex-col top-16 w-32 right-[15px] z-[5] rounded-xl shadow-custom'>
+            <button id={id} className="flex p-2 gap-2 items-center md:hover:bg-[#f0f4f9] md:rounded-t-xl">
+                <Image id={id} className="w-5" alt="" src={userProfile}></Image>
+                <p id={id} className="font-monserrat text-base text-black font-semibold text-left">Profile</p>
+            </button>
+            <button id={id} className="flex p-2 gap-2 items-center md:hover:bg-[#f0f4f9]">
+                <Image id={id} className="w-5" alt="" src={message}></Image>
+                <p id={id} className="font-monserrat text-base text-black font-semibold text-left">Messages</p>
+            </button>
+            <button id={id} className="flex p-2 gap-2 items-center md:hover:bg-[#f0f4f9]">
+                <Image id={id} className="w-5" alt="" src={settings}></Image>
+                <p id={id} className="font-monserrat text-base text-black font-semibold text-left">Settings</p>
+            </button>
+            <button onClick={handleSignOut} id={id} className="flex p-2 gap-2 items-center md:hover:bg-[#f0f4f9] md:rounded-b-xl">
+                <Image id={id} className="w-5" alt="" src={logOut}></Image>
+                <p id={id} className="font-monserrat text-base text-black font-semibold text-left">Log out</p>
+            </button>
+            <div id={id} className="absolute top-[-16px] right-10 w-0 h-0">
+                <div id={id} className="w-0 h-0 border-solid border-transparent border-[8px] border-b-white"></div>
             </div>
+        </div>
     )
 }

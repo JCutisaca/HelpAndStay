@@ -2,7 +2,7 @@ import Link from "next/link";
 import IconHelpAndStay from "../utils/IconHelpAndStay";
 import Image from "next/image";
 import LoginModal from "../LoginModal/LoginModal";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import { UserContext } from "../Providers/UserProvider/UserProvider";
 import notification from '@/assets/svg/notification.svg'
@@ -18,6 +18,7 @@ export default function NavBar() {
 
     const [loginModal, setLoginModal] = useState(false);
     const [registerModal, setRegisterModal] = useState(false);
+    const [userDropDownModal, setUserDropDownModal] = useState(false);
     const [t, i18n] = useTranslation("global");
     const { user, setUser } = useContext(UserContext);
     const closeModal = (event) => {
@@ -29,8 +30,23 @@ export default function NavBar() {
         }
     }
 
+    useEffect(() => {
+        if (userDropDownModal) {
+            const handler = (event) => {
+                if (event.target.id !== "userDropDownModalId" && event.target.id !== "userDropDownMenu") {
+                    setUserDropDownModal(false);
+                }
+            };
+            document.addEventListener("mousedown", handler);
+            return () => {
+                document.removeEventListener("mousedown", handler);
+            }
+        }
+    }, [userDropDownModal]);
+
+
     return (
-        <nav className="flex items-center md:justify-around h-20 bg-white">
+        <nav className="flex w-full fixed top-0 z-10 pl-4 pr-4 items-center md:justify-around h-20 bg-white">
             <div className="flex items-center md:justify-around w-[70%] h-[100%">
                 <IconHelpAndStay></IconHelpAndStay>
                 <Link className="hidden md:inline-block text-base font-monserrat font-semibold" href={"/"}>About us</Link>
@@ -45,7 +61,7 @@ export default function NavBar() {
                     <button onClick={() => setRegisterModal(true)} className="text-base font-monserrat font-semibold w-40 text-white text-nowrap bg-[#5196A6] rounded-xl hover:bg-[#F3A342] hover:text-white hover:border-none transition-all duration-500">Sign up</button>
                 </div>
                 :
-                <div className="flex justify-end gap-0 w-fit md:w-[40%]">
+                <div className="relative flex justify-end gap-0 w-fit md:w-[40%]">
                     <button className="hidden md:inline-block text-base font-monserrat font-semibold w-fit flex items-center">
                         <Image className="w-8" src={notification} alt=""></Image>
                     </button>
@@ -54,11 +70,18 @@ export default function NavBar() {
                             {user?.firstName}
                         </p>
                     </div>
-                    <button className="flex w-fit items-center">
-                        <Image width={"32"} height={"32"} className="w-12 h-full object-cover rounded-full" src={user?.image}></Image>
-                        <Image className="w-6" src={arrowDown} />
-                    </button>
-                    <UserDropDown />
+                    <div id="userDropDownModalId"
+                        onClick={(event) => {
+                            if (event.target.id === "userDropDownModalId") {
+                                setUserDropDownModal(!userDropDownModal)
+                            }
+                        }} className="cursor-pointer flex w-fit items-center top-0 relative">
+                        <div id="userDropDownModalId" className="flex">
+                            <Image id="userDropDownModalId" alt="" width={"32"} height={"32"} className="w-12 h-full object-cover rounded-full" src={user?.image}></Image>
+                            <Image id="userDropDownModalId" alt="" className="w-6" src={arrowDown} />
+                        </div>
+                        {userDropDownModal && <UserDropDown />}
+                    </div>
                     <div className="hidden md:flex items-center ml-8">
                         <button className="flex h-fit">
                             <p className={`font-monserrat ${i18n.language === 'en' ? 'font-semibold text-black' : ""}`}>En</p>
@@ -69,12 +92,12 @@ export default function NavBar() {
                 </div>
             }
             {loginModal &&
-                <div onClick={closeModal} id="modal" className="fixed top-0 overflow-y-auto left-0 w-full h-full z-[3] bg-[#000000b3]">
+                <div onClick={closeModal} id="modal" className="fixed top-0 overflow-y-auto left-0 w-full h-full z-10 bg-[#000000b3]">
                     <LoginModal />
                 </div>
             }
             {registerModal &&
-                <div onClick={closeModal} id="registerModal" className="block fixed overflow-y-auto top-0 left-0 w-full h-full z-[3] bg-[#000000b3]">
+                <div onClick={closeModal} id="registerModal" className="block fixed overflow-y-auto top-0 left-0 w-full h-full z-10 bg-[#000000b3]">
                     <RegisterModal />
                 </div>
             }
