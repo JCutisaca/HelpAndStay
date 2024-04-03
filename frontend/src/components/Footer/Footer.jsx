@@ -11,19 +11,19 @@ export default function Footer() {
                 <Image className="object-contain w-full" alt="" src={iconWhite}></Image>
             </div>
             <div className="gap-3 justify-center w-fit flex flex-col items-start col-start-2 row-start-4 row-end-7 md:col-start-5 md:row-start-2 md:row-span-4 md:grid md:items-center md:gap-4 text-nowrap">
-                <Link className="font-monserrat text-white w-fit" href={"/"}>About us</Link>
+                <Link className="font-monserrat text-white w-fit" href={"/about-us/project"}>About us</Link>
                 <Link className="font-monserrat text-white w-fit" href={"/"}>Find host</Link>
                 <Link className="font-monserrat text-white w-fit" href={"/"}>Host</Link>
                 <Link className="font-monserrat text-white w-fit" href={"/"}>Profile</Link>
             </div>
             <div className="gap-3 text-wrap justify-center w-full flex flex-col items-start col-start-8 col-end-12 row-start-4 row-end-7 md:col-start-7 xl:col-start-9 md:row-start-2 md:row-span-4 md:w-fit md:grid md:items-center md:gap-4 text-nowrap">
-                <Link className="row-span-1 font-monserrat text-white w-fit" href={"/"}>FAQ</Link>
-                <Link className="row-span-1 font-monserrat text-white w-fit" href={"/"}>Verification</Link>
-                <Link className="row-span-1 font-monserrat text-white w-fit" href={"/"}>Safety</Link>
+                <Link className="row-span-1 font-monserrat text-white w-fit" href={"/about-us/faq"}>FAQ</Link>
+                <Link className="row-span-1 font-monserrat text-white w-fit" href={"/about-us/verification"}>Verification</Link>
+                <Link className="row-span-1 font-monserrat text-white w-fit" href={"/about-us/safety"}>Safety</Link>
                 <Link className="row-span-1 font-monserrat text-white w-fit" href={"/"}>Settings</Link>
             </div>
             <div className="gap-3 justify-center w-fit flex flex-col items-start col-start-2 row-start-8 row-end-12 md:col-start-9 xl:col-start-12 md:row-start-2 md:row-span-4 md:grid md:items-center md:gap-4 md:text-nowrap">
-                <Link className="row-span-1 font-monserrat text-white w-fit" href={"/"}>Contacts:</Link>
+                <Link className="row-span-1 font-monserrat text-white w-fit" href={"/about-us/contacts"}>Contacts:</Link>
                 <Link className="row-span-1 font-monserrat text-white w-fit" href={"/"}>Support</Link>
                 <Link className="row-span-1 font-monserrat text-white w-fit" href={"/"}>+54 11 22334455</Link>
                 <Link className="whitespace-normal break-words row-span-1 font-monserrat text-white w-full" href={"/"}>Lucas.soldierty@gmail.com</Link>

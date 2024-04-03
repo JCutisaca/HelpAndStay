@@ -3,5 +3,5 @@
 <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="SVGRepo_bgCarrier" stroke-width="0"/>
 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
-<g id="SVGRepo_iconCarrier"> <circle cx="12" cy="12" r="9.5" stroke="#BF9E80" stroke-linecap="round"/> <path d="M8.20857 15.378C8.63044 15.7433 9.20751 16.0237 9.86133 16.2124C10.5191 16.4023 11.256 16.5 12 16.5C12.744 16.5 13.4809 16.4023 14.1387 16.2124C14.7925 16.0237 15.3696 15.7433 15.7914 15.378" stroke="#BF9E80" stroke-linecap="round"/> <circle cx="9" cy="10" r="1" fill="#BF9E80" stroke="#BF9E80" stroke-linecap="round"/> <circle cx="15" cy="10" r="1" fill="#BF9E80" stroke="#BF9E80" stroke-linecap="round"/> </g>
+<g id="SVGRepo_iconCarrier"> <circle cx="12" cy="12" r="10" stroke="#bf9e80" stroke-width="2" stroke-linecap="round"/> <path d="M7.88124 15.7559C8.37391 16.1826 9.02309 16.4909 9.72265 16.6928C10.4301 16.897 11.2142 17 12 17C12.7858 17 13.5699 16.897 14.2774 16.6928C14.9769 16.4909 15.6261 16.1826 16.1188 15.7559" stroke="#bf9e80" stroke-width="2" stroke-linecap="round"/> <circle cx="9" cy="10" r="1.25" fill="#bf9e80" stroke="#bf9e80" stroke-width="0.5" stroke-linecap="round"/> <circle cx="15" cy="10" r="1.25" fill="#bf9e80" stroke="#bf9e80" stroke-width="0.5" stroke-linecap="round"/> </g>
 </svg>

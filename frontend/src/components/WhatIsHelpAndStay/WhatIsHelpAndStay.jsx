@@ -16,8 +16,8 @@ export default function WhatIsHelpAndStay() {
                         <Image className="w-24 lg:w-28 rounded-full border-solid border-4 border-[#5196A6] p-6" alt="" src={airplane}></Image>
                     </div>
                     <div className="w-[70%] flex flex-col justify-center">
-                        <h3 className="font-monserrat font-semibold text-xl md:text-2xl">Travel</h3>
-                        <p className="font-monserrat text-base md:text-base">Our service makes travel more affordable with <b>free accommodation</b>. Choose the direction and the host you can visit and go.</p>
+                        <h3 className="font-monserrat font-semibold text-xl md:text-2xl">{t("home.travel.title")}</h3>
+                        <p className="font-monserrat text-base md:text-base">{t("home.travel.content")}<b>{t("home.travel.contentStrong")}</b>{t("home.travel.contentEnd")}</p>
                     </div>
                 </div>
                 <div className="flex h-40 w-full lg:w-[40%] justify-between justify-between border-solid border-b-2 border-[#5196A6] lg:border-b-0">
@@ -25,8 +25,8 @@ export default function WhatIsHelpAndStay() {
                         <Image className="w-24 lg:w-28 rounded-full border-solid border-4 border-[#72A689] p-6" alt="" src={handshake}></Image>
                     </div>
                     <div className="w-[70%] flex flex-col justify-center">
-                        <h3 className="font-monserrat font-semibold text-xl md:text-2xl">Work</h3>
-                        <p className="font-monserrat text-base md:text-base">"Pay" for housing with an easy job that won't take you much time. You can choose the working conditions that suit you.</p>
+                        <h3 className="font-monserrat font-semibold text-xl md:text-2xl">{t("home.work.title")}</h3>
+                        <p className="font-monserrat text-base md:text-base">{t("home.work.content")}</p>
                     </div>
                 </div>
             </div>
@@ -36,8 +36,8 @@ export default function WhatIsHelpAndStay() {
                         <Image className="w-24 lg:w-28 rounded-full border-solid border-4 border-[#F3A342] p-6" alt="" src={home}></Image>
                     </div>
                     <div className="w-[70%] flex flex-col justify-center">
-                        <h3 className="font-monserrat font-semibold text-xl md:text-2xl">Host</h3>
-                        <p className="font-monserrat text-base md:text-base">By hosting guests at your home, the help you with work, you help them travel. Choose among those who want to stay at your place.</p>
+                        <h3 className="font-monserrat font-semibold text-xl md:text-2xl">{t("home.hostHAS.title")}</h3>
+                        <p className="font-monserrat text-base md:text-base">{t("home.hostHAS.content")}</p>
                     </div>
                 </div>
                 <div className="flex h-40 w-full lg:w-[40%] justify-between border-solid border-b-2 border-[#5196A6] lg:border-b-0">
@@ -45,8 +45,8 @@ export default function WhatIsHelpAndStay() {
                         <Image className="w-24 lg:w-28 rounded-full border-solid border-4 border-[#BF9E80] p-6" alt="" src={happy}></Image>
                     </div>
                     <div className="w-[70%] flex flex-col justify-center">
-                        <h3 className="font-monserrat font-semibold text-xl md:text-2xl">Find friends</h3>
-                        <p className="font-monserrat text-base md:text-base">Make a cultural exchange. Find new friends, have fun and have an unforgettable time.</p>
+                        <h3 className="font-monserrat font-semibold text-xl md:text-2xl">{t("home.findFriends.title")}</h3>
+                        <p className="font-monserrat text-base md:text-base">{t("home.findFriends.content")}</p>
                     </div>
                 </div>
             </div>
@@ -58,11 +58,11 @@ export default function WhatIsHelpAndStay() {
                             <Image className="w-[6rem] rounded-full border-solid border-4 border-[#5196A6] p-6" alt="" src={airplane}></Image>
                         </div>
                         <div className="w-[70%]">
-                            <h3 className="font-monserrat font-semibold text-xl">Travel</h3>
+                            <h3 className="font-monserrat font-semibold text-xl">{t("home.travel.title")}</h3>
                         </div>
                     </div>
                     <div className="w-[95%] flex flex-col justify-center">
-                        <p className="font-monserrat text-base">Our service makes travel more affordable with <b>free accommodation</b>. Choose the direction and the host you can visit and go.</p>
+                        <p className="font-monserrat text-base">{t("home.travel.content")}<b>{t("home.travel.contentStrong")}</b>{t("home.travel.contentEnd")}</p>
                     </div>
                 </div>
 
@@ -72,11 +72,11 @@ export default function WhatIsHelpAndStay() {
                             <Image className="w-[6rem] rounded-full border-solid border-4 border-[#72A689] p-6" alt="" src={handshake}></Image>
                         </div>
                         <div className="w-[70%]">
-                            <h3 className="font-monserrat font-semibold text-xl">Work</h3>
+                            <h3 className="font-monserrat font-semibold text-xl">{t("home.work.title")}</h3>
                         </div>
                     </div>
                     <div className="w-[95%] flex flex-col justify-center">
-                        <p className="font-monserrat text-base">"Pay" for housing with an easy job that won't take you much time. You can choose the working conditions that suit you.</p>
+                        <p className="font-monserrat text-base">{t("home.work.content")}</p>
                     </div>
                 </div>
             </div>
@@ -88,11 +88,11 @@ export default function WhatIsHelpAndStay() {
                             <Image className="w-[6rem] rounded-full border-solid border-4 border-[#F3A342] p-6" alt="" src={home}></Image>
                         </div>
                         <div className="w-[70%]">
-                            <h3 className="font-monserrat font-semibold text-xl">Host</h3>
+                            <h3 className="font-monserrat font-semibold text-xl">{t("home.hostHAS.title")}</h3>
                         </div>
                     </div>
                     <div className="w-[95%] flex flex-col justify-center">
-                        <p className="font-monserrat text-base">By hosting guests at your home, the help you with work, you help them travel. Choose among those who want to stay at your place.</p>
+                        <p className="font-monserrat text-base">{t("home.hostHAS.content")}</p>
                     </div>
                 </div>
 
@@ -102,11 +102,11 @@ export default function WhatIsHelpAndStay() {
                             <Image className="w-[6rem] rounded-full border-solid border-4 border-[#BF9E80] p-6" alt="" src={happy}></Image>
                         </div>
                         <div className="w-[70%]">
-                            <h3 className="font-monserrat font-semibold text-xl">Find friends</h3>
+                            <h3 className="font-monserrat font-semibold text-xl">{t("home.findFriends.title")}</h3>
                         </div>
                     </div>
                     <div className="w-[95%] flex flex-col justify-center">
-                        <p className="font-monserrat text-base">Make a cultural exchange. Find new friends, have fun and have an unforgettable time.</p>
+                        <p className="font-monserrat text-base">{t("home.findFriends.content")}</p>
                     </div>
                 </div>
             </div>

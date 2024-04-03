@@ -1,5 +1,62 @@
 {
+    "navbar": {
+        "aboutUs": {
+            "title": "About us",
+            "aboutProject": "About project",
+            "safety": "Safety",
+            "verification": "Verification",
+            "contacts": "Contacts",
+            "faq": "FAQ"
+        },
+        "userDropdown": {
+            "profile": "Profile",
+            "messages": "Messages",
+            "settings": "Settings",
+            "logOut": "Log out"
+        },
+        "host": "Host",
+        "findHost": "Find host",
+        "signIn": "Sign in",
+        "signUp": "Sign up"
+    },
     "home": {
-        "title": "What is Help&Stay?"
+        "title": "What is Help&Stay?",
+        "whereNext": "Where next?",
+        "join": "Join Help&Stay",
+        "host": "Host",
+        "findHost": "Find host",
+        "travel": {
+            "title": "Travel",
+            "content": "Our service makes travel more affordable with ",
+            "contentStrong": "free accommodation",
+            "contentEnd": ". Choose the direction and the host you can visit and go."
+        },
+        "work": {
+            "title": "Work",
+            "content": "\"Pay\" for housing with an easy job that won't take you much time. You can choose the working conditions that suit you."
+        },
+        "hostHAS": {
+            "title": "Host",
+            "content": "By hosting guests at your home, the help you with work, you help them travel. Choose among those who want to stay at your place."
+        },
+        "findFriends": {
+            "title": "Find friends",
+            "content": "Make a cultural exchange. Find new friends, have fun and have an unforgettable time."
+        },
+        "experiencePhrase": {
+            "textOne": "The one who lives sees a lot.",
+            "textTwo": "Those who travel see more"
+        },
+        "statistics": {
+            "title": "Some statistics",
+            "users": "Users of our service",
+            "countries": "Countries for travel",
+            "homes": "Homes visited",
+            "reviews": "Positive reviews"
+        },
+        "chooseHost": {
+            "host": "Host",
+            "findHost": "Find host"
+        }
     }
 }

@@ -151,6 +151,10 @@ export default function RegisterModal() {
 
     useEffect(() => {
         getAllCountries(setCountries, setCodes);
+        document.body.style.overflow = "hidden"
+        return (() => {
+            document.body.style.overflow = ""
+        })
     }, [])
 
     return (

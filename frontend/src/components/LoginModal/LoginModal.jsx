@@ -1,8 +1,7 @@
-import MailIcon from "../utils/MailIcon";
-import LockIcon from "../utils/LockIcon";
 import Image from "next/image";
 import login from '@/assets/images/login.jpg'
 import { signIn, useSession } from 'next-auth/react'
+import { useEffect } from "react";
 
 
 export default function LoginModal() {
@@ -12,10 +11,15 @@ export default function LoginModal() {
     // const { data } = useSession()
     // console.log(data);
 
-
+    useEffect(() => {
+        document.body.style.overflow = "hidden"
+        return (() => {
+            document.body.style.overflow = ""
+        })
+    }, [])
     return (
         <div className="absolute flex flex-col md:flex-row rounded-3xl border border-black shadow-2xl w-[90%] md:w-[40rem] h-[40rem] top-[5rem] z-[5] left-[50%] transform -translate-x-1/2">
-            <div className="w-full h-full md:w-[50%] flex flex-col items-center justify-evenly bg-white rounded-3xl md:rounded-e-[0] md:rounded-s-3xl">
+            <div className="w-full h-full md:w-[50%] flex flex-col items-center justify-evenly bg-white rounded-3xl md:rounded-e-[0] md:rounded-s-3xl mb-20">
                 <p className="text-xl font-monserrat font-semibold text-center text-black w-[80%]">Sign in with the following services:</p>
                 <div className="w-[80%] flex flex-col items-center gap-4">
                     <button onClick={() => handleSignInGoogle()} className="flex items-center justify-center md:justify-start gap-4 text-nowrap text-base font-monserrat font-semibold w-full text-black border-[#242424] border-solid border-2 rounded-xl pl-4">

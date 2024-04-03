@@ -45,13 +45,13 @@ export default function Home() {
   return (
     <div className="w-full">
       {!user?.email ? <div className="grid grid-cols-2 grid-rows-12 md:grid-cols-7 md:grid-rows-9 gap-4 w-full h-full max-h-[90vh]"><div className="flex items-center gap-4 w-full h-full justify-between col-span-2 md:hidden">
-        <button onClick={() => setLoginModal(true)} className="flex items-center justify-center w-[inherit] h-[65%] text-xl font-monserrat font-semibold w-40 text-[#5196A6] border border-solid border-4 rounded-xl">Sign in</button>
+        <button onClick={() => setLoginModal(true)} className="flex items-center justify-center w-[inherit] h-[65%] text-xl font-monserrat font-semibold w-40 text-[#5196A6] border border-solid border-4 rounded-xl">{t("navbar.signIn")}</button>
         {loginModal &&
           <div onClick={closeModal} id="modal" className="overflow-y-auto inset-0 fixed top-0 left-0 w-full h-full z-10 bg-[#000000b3]">
             <LoginModal />
           </div>
         }
-        <button onClick={() => setRegisterModal(true)} className="flex items-center justify-center w-[inherit] h-[65%] text-xl font-monserrat font-semibold w-40 text-white text-nowrap bg-[#5196A6] rounded-xl">Sign up</button>
+        <button onClick={() => setRegisterModal(true)} className="flex items-center justify-center w-[inherit] h-[65%] text-xl font-monserrat font-semibold w-40 text-white text-nowrap bg-[#5196A6] rounded-xl">{t("navbar.signUp")}</button>
         {registerModal &&
           <div onClick={closeModal} id="registerModal" className="block overflow-y-auto fixed top-0 left-0 w-full h-full z-10 bg-[#000000b3]">
             <RegisterModal />
@@ -63,10 +63,10 @@ export default function Home() {
         </div>
         <div className="flex flex-col items-center justify-center gap-2 col-span-2 row-start-4 row-end-4 bg-white z-[1] h-full md:col-start-1 md:col-end-4 md:row-start-4 md:row-end-6">
           <div className="w-full h-[50%] flex items-center justify-center">
-            <h1 className="font-unbounded text-3xl md:text-4xl lg:text-5xl">Where next?</h1>
+            <h1 className="font-unbounded text-3xl md:text-4xl lg:text-5xl">{t("home.whereNext")}</h1>
           </div>
           <div className="w-full md:w-[80%] h-[50%] flex justify-end items-center">
-            <button className="font-monserrat font-semibold md:h-[2.5rem] text-base text-white bg-[#F3A342] w-full rounded-xl md:w-[50%]">Join Help&Stay</button>
+            <button className="font-monserrat font-semibold md:h-[2.5rem] text-base text-white bg-[#F3A342] w-full rounded-xl md:w-[50%]">{t("home.join")}</button>
           </div>
         </div>
         <div className="col-span-1 row-start-5 row-end-9 md:col-start-5 md:row-start-1 md:row-end-9">

@@ -1,3 +1,62 @@
 {
-    "hola": "hola"
+    "navbar": {
+        "aboutUs": {
+            "title": "Acerca de",
+            "aboutProject": "Proyecto",
+            "safety": "Seguridad",
+            "verification": "Verificación",
+            "contacts": "Contacto",
+            "faq": "FAQ"
+        },
+        "userDropdown": {
+            "profile": "Perfil",
+            "messages": "Mensajes",
+            "settings": "Config.",
+            "logOut": "Salir"
+        },
+        "host": "Alojamiento",
+        "findHost": "Buscar",
+        "signIn": "Iniciar",
+        "signUp": "Registrarse"
+    },
+    "home": {
+        "title": "¿Qué es Help&Stay?",
+        "whereNext": "¿Qué sigue?",
+        "join": "Únete a Help&Stay",
+        "host": "Alojamiento",
+        "findHost": "Buscar",
+        "travel": {
+            "title": "Viajar",
+            "content": "Nuestro servicio hace que viajar sea más asequible con ",
+            "contentStrong": "alojamiento gratuito",
+            "contentEnd": ". Elige el destino y el anfitrión que puedas visitar y ve."
+        },
+        "work": {
+            "title": "Trabajar",
+            "content": "\"Paga\" por el alojamiento con un trabajo sencillo que no te llevará mucho tiempo. Puedes elegir las condiciones laborales que te convengan."
+        },
+        "hostHAS": {
+            "title": "Se anfitrión",
+            "content": "Al hospedar a huéspedes en tu hogar, los ayudas con el trabajo y les ayudas a viajar. Elige entre aquellos que deseen quedarse en tu hogar."
+        },
+        "findFriends": {
+            "title": "Encuentra amigos",
+            "content": "Realiza un intercambio cultural. Encuentra nuevos amigos, diviértete y pasa un tiempo inolvidable."
+        },
+        "experiencePhrase": {
+            "textOne": "Quien vive, ve mucho.",
+            "textTwo": "Quienes viajan, ven más."
+        },
+        "statistics": {
+            "title": "Algunas estadísticas",
+            "users": "Usuarios de nuestro servicio",
+            "countries": "Países para viajar",
+            "homes": "Hogares visitados",
+            "reviews": "Reseñas positivas"
+        },
+        "chooseHost": {
+            "host": "Alojamiento",
+            "findHost": "Buscar alojamiento"
+        }
+    }
 }

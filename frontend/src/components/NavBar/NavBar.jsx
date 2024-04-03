@@ -9,7 +9,8 @@ import notification from '@/assets/svg/notification.svg'
 import arrowDown from '@/assets/svg/arrowDown.svg'
 import { useTranslation } from "react-i18next";
 import MenuBurger from "../MenuBurger/MenuBurger";
-import UserDropDown from "../utils/User/UserDropDown";
+import UserDropDown from "../Dropdowns/UserDropDown";
+import AboutDropDown from "../Dropdowns/AboutDropDown";
 
 
 
@@ -19,6 +20,7 @@ export default function NavBar() {
     const [loginModal, setLoginModal] = useState(false);
     const [registerModal, setRegisterModal] = useState(false);
     const [userDropDownModal, setUserDropDownModal] = useState(false);
+    const [aboutDropDownModal, setAboutDropDownModal] = useState(false);
     const [t, i18n] = useTranslation("global");
     const { user, setUser } = useContext(UserContext);
     const closeModal = (event) => {
@@ -29,6 +31,36 @@ export default function NavBar() {
             setRegisterModal(false);
         }
     }
+
+    const id = "menuBurgerModal";
+    const closeHandler = () => setAboutDropDownModal(false);
+
+    const [language, setLanguage] = useState('en')
+
+    const handleLanguage = () => {
+        if (language === 'en') {
+            i18n.changeLanguage('es')
+            setLanguage('es');
+            localStorage.setItem("language", "es");
+        }
+        if (language === 'es') {
+            i18n.changeLanguage('en')
+            setLanguage('en');
+            localStorage.setItem("language", "en");
+        }
+    }
+
+    useEffect(() => {
+        const item = localStorage.getItem("language");
+        if (item) {
+            setLanguage(item);
+            i18n.changeLanguage(item);
+        } else {
+            localStorage.setItem("language", "en");
+            setLanguage("en");
+            i18n.changeLanguage("en");
+        }
+    }, []);
 
     useEffect(() => {
         if (userDropDownModal) {
@@ -42,23 +74,43 @@ export default function NavBar() {
                 document.removeEventListener("mousedown", handler);
             }
         }
-    }, [userDropDownModal]);
+        if (aboutDropDownModal) {
+            const handler = (event) => {
+                if (event.target.id !== id) {
+                    closeHandler()
+                }
+            };
+            document.addEventListener("mousedown", handler);
+            return () => {
+                document.removeEventListener("mousedown", handler);
+            }
+        }
+    }, [userDropDownModal, aboutDropDownModal]);
 
 
     return (
         <nav className="flex w-full fixed top-0 z-10 pl-4 pr-4 items-center md:justify-around h-20 bg-white">
             <div className="flex items-center md:justify-around w-[70%] h-[100%">
                 <IconHelpAndStay></IconHelpAndStay>
-                <Link className="hidden md:inline-block text-base font-monserrat font-semibold" href={"/"}>About us</Link>
-                <Link className="hidden md:inline-block text-base font-monserrat font-semibold" href={"/"}>Host</Link>
-                <Link className="hidden md:inline-block text-base font-monserrat font-semibold" href={"/"}>Find Host</Link>
-                {!user?.email ? <Link className="hidden md:inline-block text-base font-monserrat font-semibold" href={"/"}>FAQ</Link> : ""}
+                <button id={id} onClick={() => setAboutDropDownModal(!aboutDropDownModal)} className="hidden relative md:flex items-center text-base font-monserrat font-semibold">
+                    <p id={id}>{t("navbar.aboutUs.title")}</p>
+                    <p id={id} className="w-fit">
+                        <svg id={id} width="24" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path id={id} d="M9.88 11L16 17.1067L22.12 11L24 12.88L16 20.88L8 12.88L9.88 11Z" fill="#242424" />
+                        </svg>
+                    </p>
+                    {aboutDropDownModal && <AboutDropDown id={id} closeHandler={closeHandler} />}
+                </button>
+                <Link className="hidden md:inline-block text-base font-monserrat font-semibold" href={"/"}>{t("navbar.host")}</Link>
+                <Link className="hidden md:inline-block text-base font-monserrat font-semibold" href={"/"}>{t("navbar.findHost")}</Link>
+                {!user?.email ? <p className="hidden md:w-8 lg:hidden md:inline-block text-base font-monserrat font-semibold">&nbsp;</p> : ""}
+                {!user?.email ? <Link className="hidden lg:inline-block text-base font-monserrat font-semibold" href={"/abou-us/faq"}>{t("navbar.aboutUs.faq")}</Link> : ""}
             </div>
             {!user?.email ?
                 <div className="hidden md:flex gap-4 w-[30%]">
-                    <button onClick={() => setLoginModal(true)} className="text-base font-monserrat font-semibold w-40 text-[#5196A6] border border-solid border-4 rounded-xl hover:bg-[#F3A342] hover:text-white hover:border-[#F3A342] transition-all duration-500">Sign in</button>
+                    <button onClick={() => setLoginModal(true)} className="text-base font-monserrat font-semibold w-40 text-[#5196A6] border border-solid border-4 rounded-xl hover:bg-[#F3A342] hover:text-white hover:border-[#F3A342] transition-all duration-500">{t("navbar.signIn")}</button>
 
-                    <button onClick={() => setRegisterModal(true)} className="text-base font-monserrat font-semibold w-40 text-white text-nowrap bg-[#5196A6] rounded-xl hover:bg-[#F3A342] hover:text-white hover:border-none transition-all duration-500">Sign up</button>
+                    <button onClick={() => setRegisterModal(true)} className="text-base font-monserrat font-semibold w-40 text-white text-nowrap bg-[#5196A6] rounded-xl hover:bg-[#F3A342] hover:text-white hover:border-none transition-all duration-500">{t("navbar.signUp")}</button>
                 </div>
                 :
                 <div className="relative flex justify-end gap-0 w-fit md:w-[40%]">
@@ -83,7 +135,7 @@ export default function NavBar() {
                         {userDropDownModal && <UserDropDown />}
                     </div>
                     <div className="hidden md:flex items-center ml-8">
-                        <button className="flex h-fit">
+                        <button onClick={handleLanguage} className="flex h-fit">
                             <p className={`font-monserrat ${i18n.language === 'en' ? 'font-semibold text-black' : ""}`}>En</p>
                             <span>|</span>
                             <p className={`font-monserrat ${i18n.language === 'es' ? 'font-semibold text-black' : ""}`}>Es</p>

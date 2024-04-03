@@ -10,6 +10,8 @@ import Footer from "@/components/Footer/Footer";
 // import { useEffect } from "react";
 import GlobalProvider from "@/components/Providers/GlobalProvider";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
+import { useEffect } from "react";
 // import i18n from "@/languages/i18n";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -40,13 +42,13 @@ const metadata = {
 
 export default function RootLayout({ children }) {
 
-  // const [t, i18n] = useTranslation("global");
+  const [t, i18n] = useTranslation("global");
   axios.defaults.baseURL = "http://localhost:3001";
 
-  // useEffect(() => {
-  //   const language = localStorage.getItem("language");
-  //   i18n.changeLanguage(language);
-  // }, [])
+  useEffect(() => {
+    const language = localStorage.getItem("language");
+    i18n.changeLanguage(language);
+  }, [])
 
   return (
     <html lang="en">
